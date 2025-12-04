@@ -51,45 +51,39 @@
     .icon-lg { width: 32px; height: 32px; stroke-width: 1.25; }
     .icon-xl { width: 40px; height: 40px; stroke-width: 1; }
     
-    /* Nav Buttons */
-    .nav-fullscreen-btn { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; background: var(--bg-elevated); border: 1px solid var(--border-medium); border-radius: 10px; color: var(--text-secondary); cursor: pointer; transition: all 0.3s ease; }
-    .nav-fullscreen-btn:hover { border-color: var(--accent-teal); color: var(--accent-teal); background: var(--accent-teal-dim); transform: scale(1.05); }
-    .nav-fullscreen-btn .icon { width: 20px; height: 20px; }
-    .nav-fullscreen-btn .icon-exit { display: none; }
-    body.fullscreen-active .nav-fullscreen-btn .icon-enter { display: none; }
-    body.fullscreen-active .nav-fullscreen-btn .icon-exit { display: block; }
+    /* Fullscreen Button */
+    .fullscreen-btn { position: fixed; top: 1.25rem; right: 1.25rem; z-index: 1100; width: 44px; height: 44px; border-radius: 12px; background: var(--bg-glass); border: 1px solid var(--border-subtle); backdrop-filter: blur(20px); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all 0.3s var(--ease-out-expo); }
+    .fullscreen-btn:hover { color: var(--accent-teal); border-color: var(--accent-teal); background: var(--accent-teal-dim); }
+    .fullscreen-btn .icon-exit { display: none; }
+    body.fullscreen-active .fullscreen-btn .icon-enter { display: none; }
+    body.fullscreen-active .fullscreen-btn .icon-exit { display: block; }
     
     /* Section Navigation */
-    .section-nav { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); z-index: 900; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 1rem 0.6rem; background: rgba(20, 20, 28, 0.95); border: 1px solid var(--border-medium); border-radius: 28px; backdrop-filter: blur(20px); left: auto !important; box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+    .section-nav { position: fixed; right: 1.25rem; top: 50%; transform: translateY(-50%); z-index: 900; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 0.75rem 0.5rem; background: var(--bg-glass); border: 1px solid var(--border-subtle); border-radius: 28px; backdrop-filter: blur(20px); }
     .section-nav-item { position: relative; width: 40px; height: 40px; border-radius: 50%; background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s var(--ease-out-expo); }
-    .section-nav-item::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--text-muted); transition: all 0.3s var(--ease-out-expo); }
-    .section-nav-item:hover::before { background: var(--text-primary); transform: scale(1.3); }
-    .section-nav-item.active::before { width: 12px; height: 12px; background: var(--accent-teal); box-shadow: 0 0 20px var(--accent-teal-glow); }
-    .section-nav-tooltip { position: absolute; right: calc(100% + 16px); top: 50%; transform: translateY(-50%) translateX(8px); padding: 0.6rem 1rem; background: var(--bg-card); border: 1px solid var(--border-medium); border-radius: 8px; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); white-space: nowrap; opacity: 0; visibility: hidden; pointer-events: none; transition: all 0.25s var(--ease-out-expo); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+    .section-nav-item::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--text-faint); transition: all 0.3s var(--ease-out-expo); }
+    .section-nav-item:hover::before { background: var(--text-muted); transform: scale(1.2); }
+    .section-nav-item.active::before { width: 10px; height: 10px; background: var(--accent-teal); box-shadow: 0 0 16px var(--accent-teal-glow); }
+    .section-nav-tooltip { position: absolute; right: calc(100% + 14px); top: 50%; transform: translateY(-50%) translateX(8px); padding: 0.5rem 0.875rem; background: var(--bg-card); border: 1px solid var(--border-medium); border-radius: 8px; font-size: 0.8rem; font-weight: 500; color: var(--text-primary); white-space: nowrap; opacity: 0; visibility: hidden; pointer-events: none; transition: all 0.25s var(--ease-out-expo); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
     .section-nav-tooltip::after { content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%) rotate(45deg); width: 10px; height: 10px; background: var(--bg-card); border-right: 1px solid var(--border-medium); border-top: 1px solid var(--border-medium); }
     .section-nav-item:hover .section-nav-tooltip { opacity: 1; visibility: visible; transform: translateY(-50%) translateX(0); }
-    .section-nav-divider { width: 24px; height: 1px; background: var(--border-medium); margin: 0.5rem 0; }
-    .nav-arrow { width: 36px; height: 32px; border-radius: 8px; background: var(--bg-glass-subtle); border: 1px solid var(--border-medium); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); transition: all 0.3s var(--ease-out-expo); }
+    .section-nav-divider { width: 24px; height: 1px; background: var(--border-subtle); margin: 0.25rem 0; }
+    .nav-arrow { width: 36px; height: 32px; border-radius: 8px; background: transparent; border: 1px solid var(--border-subtle); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all 0.3s var(--ease-out-expo); }
     .nav-arrow:hover { border-color: var(--accent-teal); color: var(--accent-teal); background: var(--accent-teal-dim); }
     .nav-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
-    .nav-arrow:disabled:hover { border-color: var(--border-subtle); color: var(--text-muted); background: transparent; }
     .nav-arrow .icon { width: 18px; height: 18px; }
     
     /* Top Navigation */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-height); padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-glass); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); transition: all 0.4s var(--ease-out-expo); }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-height); padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; background: transparent; transition: all 0.4s var(--ease-out-expo); }
     nav.scrolled { background: var(--bg-glass); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); }
-    .logo { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--text-primary); text-decoration: none; display: flex; align-items: center; gap: 0.75rem; }
-    .logo-mark { width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; font-weight: 800; color: var(--bg-deep); }
+    .logo { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--text-primary); text-decoration: none; display: flex; align-items: center; gap: 0.65rem; }
+    .logo-mark { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; color: var(--bg-deep); }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a { color: var(--text-primary); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: all 0.3s ease; padding: 0.5rem 0; border-bottom: 2px solid transparent; }
-    .nav-links a:hover { color: var(--accent-teal); border-bottom-color: var(--accent-teal); }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s ease; }
+    .nav-links a:hover { color: var(--text-primary); }
     .nav-contact { display: flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.25rem; background: transparent; border: 1px solid var(--accent-teal); border-radius: 10px; color: var(--accent-teal); text-decoration: none; font-size: 0.875rem; font-weight: 600; transition: all 0.3s ease; }
     .nav-contact:hover { background: var(--accent-teal); color: var(--bg-deep); }
     .nav-contact .icon { width: 18px; height: 18px; }
-    .nav-right { display: flex; align-items: center; gap: 0.5rem; }
-    .nav-sources-btn { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; background: var(--bg-elevated); border: 1px solid var(--border-medium); border-radius: 10px; color: var(--text-secondary); cursor: pointer; transition: all 0.3s ease; }
-    .nav-sources-btn:hover { border-color: var(--accent-teal); color: var(--accent-teal); background: var(--accent-teal-dim); transform: scale(1.05); }
-    .nav-sources-btn .icon { width: 20px; height: 20px; }
     .mobile-menu-btn { display: none; background: none; border: none; color: var(--text-primary); cursor: pointer; padding: 0.5rem; }
     
     /* Sections */
@@ -368,41 +362,6 @@
     .modal-metric-value { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--accent-teal); }
     .modal-metric-sub { font-size: 0.85rem; color: var(--text-muted); }
     
-    /* Sources Drawer */
-    .sources-drawer { position: fixed; top: 0; right: -420px; width: 400px; max-width: 90vw; height: 100vh; background: var(--bg-elevated); border-left: 1px solid var(--border-medium); z-index: 2100; transition: right 0.4s var(--ease-out-expo); overflow-y: auto; }
-    .sources-drawer.active { right: 0; }
-    .sources-drawer-header { padding: 1.5rem; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--bg-elevated); z-index: 1; }
-    .sources-drawer-header h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; }
-    .sources-drawer-close { width: 36px; height: 36px; border-radius: 8px; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-    .sources-drawer-close:hover { border-color: var(--accent-coral); color: var(--accent-coral); }
-    .sources-drawer-body { padding: 1.5rem; }
-    .source-category { margin-bottom: 2rem; }
-    .source-category h4 { font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: var(--accent-teal); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-    .source-category h4 .icon { width: 18px; height: 18px; }
-    .source-item { padding: 1rem; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); border-radius: 10px; margin-bottom: 0.75rem; }
-    .source-item .metric { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--accent-coral); margin-bottom: 0.25rem; }
-    .source-item .claim { font-size: 0.9rem; color: var(--text-primary); margin-bottom: 0.5rem; }
-    .source-item .citation { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
-    .source-item .citation a { color: var(--accent-teal); text-decoration: none; }
-    .source-item .citation a:hover { text-decoration: underline; }
-    .source-note { padding: 1rem; background: var(--accent-teal-dim); border: 1px solid var(--accent-teal-medium); border-radius: 10px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
-    .source-note strong { color: var(--accent-teal); }
-    .sources-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2050; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-    .sources-overlay.active { opacity: 1; visibility: visible; }
-    
-    /* Mobile Menu */
-    .mobile-menu { position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; background: var(--bg-elevated); border-left: 1px solid var(--border-medium); z-index: 1500; transition: right 0.4s var(--ease-out-expo); padding: 5rem 1.5rem 2rem; }
-    .mobile-menu.active { right: 0; }
-    .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1400; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-    .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
-    .mobile-menu-links { list-style: none; margin-bottom: 2rem; }
-    .mobile-menu-links li { border-bottom: 1px solid var(--border-subtle); }
-    .mobile-menu-links a { display: block; padding: 1rem 0; color: var(--text-secondary); text-decoration: none; font-size: 1rem; font-weight: 500; transition: color 0.3s ease; }
-    .mobile-menu-links a:hover { color: var(--accent-teal); }
-    .mobile-menu-btn-sources { display: flex; align-items: center; gap: 0.5rem; width: 100%; padding: 0.875rem 1rem; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); border-radius: 10px; color: var(--text-secondary); font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; }
-    .mobile-menu-btn-sources:hover { border-color: var(--accent-teal); color: var(--accent-teal); }
-    .mobile-menu-btn-sources .icon { width: 18px; height: 18px; }
-    
     /* Responsive */
     @media (max-width: 1200px) { .section-nav { right: 0.75rem; } }
     @media (max-width: 1024px) {
@@ -420,10 +379,10 @@
     }
     @media (max-width: 768px) {
       :root { --nav-height: 64px; }
-      .section-nav { display: none; }
+      .section-nav, .fullscreen-btn { display: none; }
       nav { padding: 0 1.25rem; }
-      .nav-links, .nav-contact, .nav-sources-btn { display: none; }
-      .mobile-menu-btn { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; }
+      .nav-links, .nav-contact { display: none; }
+      .mobile-menu-btn { display: block; }
       section { padding: 4rem 1.25rem; min-height: auto; }
       .hero { min-height: 100vh; min-height: 100dvh; }
       .problem-grid, .network-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
@@ -512,10 +471,14 @@
       <symbol id="icon-maximize" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
       <symbol id="icon-minimize" viewBox="0 0 24 24"><path d="M4 14h6v6"/><path d="M20 10h-6V4"/><path d="M14 10l7-7"/><path d="M3 21l7-7"/></symbol>
       <symbol id="icon-workflow" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M6 9v3a3 3 0 0 0 3 3h2"/><path d="M18 9v3a3 3 0 0 1-3 3h-2"/></symbol>
-      <symbol id="icon-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
-      <symbol id="icon-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
     </defs>
   </svg>
+
+  <!-- Fullscreen Button -->
+  <button class="fullscreen-btn" id="fullscreenBtn" title="Toggle fullscreen (F11)">
+    <svg class="icon icon-enter"><use href="#icon-maximize"/></svg>
+    <svg class="icon icon-exit"><use href="#icon-minimize"/></svg>
+  </button>
 
   <!-- Section Navigation -->
   <nav class="section-nav" id="sectionNav">
@@ -543,12 +506,8 @@
       <li><a href="#convergence">Vision</a></li>
       <li><a href="#roadmap">Roadmap</a></li>
     </ul>
-    <div class="nav-right">
-      <a href="mailto:sean@4e.ie" class="nav-contact"><svg class="icon"><use href="#icon-mail"/></svg>Contact</a>
-      <button class="nav-sources-btn" id="navSourcesBtn" title="View Sources & Research"><svg class="icon"><use href="#icon-book"/></svg></button>
-      <button class="nav-fullscreen-btn" id="fullscreenBtn" title="Toggle fullscreen (F11)"><svg class="icon icon-enter"><use href="#icon-maximize"/></svg><svg class="icon icon-exit"><use href="#icon-minimize"/></svg></button>
-      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu"><svg class="icon"><use href="#icon-menu"/></svg></button>
-    </div>
+    <a href="mailto:sean@4e.ie" class="nav-contact"><svg class="icon"><use href="#icon-mail"/></svg>Contact</a>
+    <button class="mobile-menu-btn" aria-label="Menu"><svg class="icon"><use href="#icon-menu"/></svg></button>
   </nav>
 
   <!-- 01: Hero -->
@@ -864,82 +823,6 @@
     </div>
   </div>
 
-  <!-- Mobile Menu -->
-  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-  <div class="mobile-menu" id="mobileMenu">
-    <ul class="mobile-menu-links">
-      <li><a href="#problem" class="mobile-nav-link">Problem</a></li>
-      <li><a href="#pillars" class="mobile-nav-link">Solution</a></li>
-      <li><a href="#convergence" class="mobile-nav-link">Vision</a></li>
-      <li><a href="#roadmap" class="mobile-nav-link">Roadmap</a></li>
-      <li><a href="mailto:sean@4e.ie">Contact</a></li>
-    </ul>
-    <button class="mobile-menu-btn-sources" id="mobileSourcesBtn">
-      <svg class="icon"><use href="#icon-book"/></svg>
-      View Sources & Research
-    </button>
-  </div>
-
-  <!-- Sources Drawer -->
-  <div class="sources-overlay" id="sourcesOverlay"></div>
-  <div class="sources-drawer" id="sourcesDrawer">
-    <div class="sources-drawer-header">
-      <h3>Sources & Research</h3>
-      <button class="sources-drawer-close" id="sourcesClose" aria-label="Close"><svg class="icon"><use href="#icon-x"/></svg></button>
-    </div>
-    <div class="sources-drawer-body">
-      <div class="source-category">
-        <h4><svg class="icon"><use href="#icon-broken"/></svg>Tool Fragmentation</h4>
-        <div class="source-item">
-          <div class="metric">8-12 Apps</div>
-          <div class="claim">Average number of applications used per creative workflow</div>
-          <div class="citation">Based on industry surveys including Zapier's "State of Business Automation" (2023) which found knowledge workers use an average of 9.4 apps daily, and Adobe's Creative Cloud ecosystem studies showing creatives juggle 8-15 tools per project. <a href="https://zapier.com/blog/state-of-business-automation-2023/" target="_blank">Source →</a></div>
-        </div>
-        <div class="source-item">
-          <div class="metric">23 Minutes</div>
-          <div class="claim">Time to refocus after context switching</div>
-          <div class="citation">University of California, Irvine research by Gloria Mark found it takes an average of 23 minutes and 15 seconds to return to an original task after an interruption. <a href="https://www.ics.uci.edu/~gmark/chi08-mark.pdf" target="_blank">Source →</a></div>
-        </div>
-      </div>
-
-      <div class="source-category">
-        <h4><svg class="icon"><use href="#icon-dollar"/></svg>Cost Analysis</h4>
-        <div class="source-item">
-          <div class="metric">€50K+/year</div>
-          <div class="claim">Enterprise AR platform annual costs</div>
-          <div class="citation">8th Wall enterprise pricing starts at $50,000/year for unlimited views. Niantic Lightship and similar platforms have comparable enterprise tiers. Pricing verified via 8th Wall sales documentation and competitor analysis (2024). <a href="https://www.8thwall.com/pricing" target="_blank">Source →</a></div>
-        </div>
-        <div class="source-item">
-          <div class="metric">€36/seat</div>
-          <div class="claim">Monday.com enterprise pricing comparison</div>
-          <div class="citation">Monday.com Pro plan at $16/seat/month, Enterprise at $24+/seat/month. With typical team sizes of 10-50, annual costs range €5K-€20K. Public pricing page verified December 2024. <a href="https://monday.com/pricing" target="_blank">Source →</a></div>
-        </div>
-      </div>
-
-      <div class="source-category">
-        <h4><svg class="icon"><use href="#icon-lock"/></svg>Technical Barriers</h4>
-        <div class="source-item">
-          <div class="metric">73%</div>
-          <div class="claim">Professionals interested in AR but lacking implementation skills</div>
-          <div class="citation">Derived from multiple sources: Deloitte's "AR in Enterprise" report (2023) found 74% of enterprises see AR value but only 29% have implemented. PTC's State of Industrial AR found similar adoption gaps. The 73% figure represents the interest-implementation gap across creative and enterprise sectors.</div>
-        </div>
-      </div>
-
-      <div class="source-category">
-        <h4><svg class="icon"><use href="#icon-network"/></svg>Market Opportunity</h4>
-        <div class="source-item">
-          <div class="metric">$50B+</div>
-          <div class="claim">Projected AR market by 2028</div>
-          <div class="citation">Grand View Research projects AR market reaching $97.76B by 2028 (CAGR 38.1%). Statista estimates $50B by 2026. Conservative estimates used for projections. <a href="https://www.grandviewresearch.com/industry-analysis/augmented-reality-market" target="_blank">Source →</a></div>
-        </div>
-      </div>
-
-      <div class="source-note">
-        <strong>Note on Projections:</strong> Revenue targets (€45K → €180K → €520K ARR) are internal business projections based on pricing models and conservative user acquisition assumptions. These are goals, not guaranteed outcomes.
-      </div>
-    </div>
-  </div>
-
   <script>
     // Modal data - complete set
     const modalData = {
@@ -1076,54 +959,6 @@
     // Navbar scroll effect
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
-
-    // Mobile Menu
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-
-    function openMobileMenu() {
-      mobileMenu.classList.add('active');
-      mobileMenuOverlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeMobileMenu() {
-      mobileMenu.classList.remove('active');
-      mobileMenuOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    mobileMenuBtn.addEventListener('click', openMobileMenu);
-    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
-    mobileNavLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
-
-    // Sources Drawer
-    const navSourcesBtn = document.getElementById('navSourcesBtn');
-    const mobileSourcesBtn = document.getElementById('mobileSourcesBtn');
-    const sourcesDrawer = document.getElementById('sourcesDrawer');
-    const sourcesOverlay = document.getElementById('sourcesOverlay');
-    const sourcesClose = document.getElementById('sourcesClose');
-
-    function openSources() {
-      closeMobileMenu();
-      sourcesDrawer.classList.add('active');
-      sourcesOverlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeSources() {
-      sourcesDrawer.classList.remove('active');
-      sourcesOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    navSourcesBtn.addEventListener('click', openSources);
-    mobileSourcesBtn.addEventListener('click', openSources);
-    sourcesClose.addEventListener('click', closeSources);
-    sourcesOverlay.addEventListener('click', closeSources);
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeSources(); closeMobileMenu(); } });
 
     // Reveal animations
     const revealElements = document.querySelectorAll('.reveal');
