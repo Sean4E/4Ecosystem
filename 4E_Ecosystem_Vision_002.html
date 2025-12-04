@@ -1,0 +1,2421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4E Ecosystem — The Future of Connected Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #050508;
+      --bg-surface: #0a0a10;
+      --bg-elevated: #111118;
+      --bg-glass: rgba(17, 17, 24, 0.7);
+      --bg-glass-light: rgba(255, 255, 255, 0.02);
+      
+      --accent-teal: #00d4aa;
+      --accent-teal-dim: rgba(0, 212, 170, 0.12);
+      --accent-purple: #8a5cf6;
+      --accent-purple-dim: rgba(138, 92, 246, 0.12);
+      --accent-coral: #ff6b9d;
+      --accent-coral-dim: rgba(255, 107, 157, 0.12);
+      
+      --text-primary: #f0f0f5;
+      --text-secondary: rgba(240, 240, 245, 0.65);
+      --text-muted: rgba(240, 240, 245, 0.35);
+      
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-glow: rgba(0, 212, 170, 0.25);
+      
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+      
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+    
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-surface); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-teal-dim); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-teal); }
+    
+    /* Icons */
+    .icon {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    
+    .icon-lg { width: 32px; height: 32px; }
+    .icon-xl { width: 48px; height: 48px; stroke-width: 1.25; }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+    
+    nav.scrolled {
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 1rem 2rem;
+    }
+    
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    
+    .nav-links a:hover { color: var(--accent-teal); }
+    
+    .nav-contact {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.25rem;
+      background: var(--accent-teal-dim);
+      border: 1px solid var(--accent-teal);
+      border-radius: 8px;
+      color: var(--accent-teal);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-contact:hover {
+      background: var(--accent-teal);
+      color: var(--bg-deep);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 7rem 1.5rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(ellipse at center, var(--accent-teal-dim) 0%, transparent 50%);
+      opacity: 0.6;
+      animation: pulse 10s ease-in-out infinite;
+    }
+    
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      bottom: -20%;
+      right: -10%;
+      width: 60%;
+      height: 60%;
+      background: radial-gradient(ellipse at center, var(--accent-purple-dim) 0%, transparent 50%);
+      opacity: 0.5;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; transform: translateX(-50%) scale(1); }
+      50% { opacity: 0.7; transform: translateX(-50%) scale(1.05); }
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+    
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glow);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      color: var(--accent-teal);
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.8s var(--ease-out-expo) both;
+    }
+    
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-teal);
+      border-radius: 50%;
+      animation: blink 2s ease-in-out infinite;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+      animation: fadeInUp 0.8s var(--ease-out-expo) 0.1s both;
+    }
+    
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 50%, var(--accent-coral) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text-secondary);
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+      animation: fadeInUp 0.8s var(--ease-out-expo) 0.2s both;
+    }
+    
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s var(--ease-out-expo) 0.3s both;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out-expo);
+      border: none;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-teal) 0%, #00b894 100%);
+      color: var(--bg-deep);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 212, 170, 0.25);
+    }
+    
+    .btn-secondary {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+    }
+    
+    .btn-secondary:hover {
+      border-color: var(--accent-teal);
+      background: var(--accent-teal-dim);
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      animation: fadeInUp 0.8s var(--ease-out-expo) 0.5s both;
+    }
+    
+    .scroll-indicator .mouse {
+      width: 20px;
+      height: 32px;
+      border: 1.5px solid var(--text-muted);
+      border-radius: 10px;
+      position: relative;
+    }
+    
+    .scroll-indicator .mouse::before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3px;
+      height: 6px;
+      background: var(--accent-teal);
+      border-radius: 2px;
+      animation: scrollDown 2s ease-in-out infinite;
+    }
+    
+    @keyframes scrollDown {
+      0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 0.3; transform: translateX(-50%) translateY(8px); }
+    }
+    
+    /* Section Styles */
+    section {
+      padding: 6rem 1.5rem;
+      position: relative;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
+    }
+    
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-teal);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    
+    .section-label .icon { width: 16px; height: 16px; }
+    
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    
+    /* Kawasaki Framework Label */
+    .kawasaki-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      padding: 0.25rem 0.6rem;
+      background: var(--bg-glass-light);
+      border-radius: 4px;
+      border: 1px solid var(--border-subtle);
+    }
+    
+    /* Problem Section */
+    .problem {
+      background: var(--bg-surface);
+    }
+    
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    
+    .problem-card {
+      padding: 2rem;
+      background: var(--bg-glass);
+      border: 1px solid rgba(255, 107, 157, 0.15);
+      border-radius: 16px;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+    
+    .problem-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-coral);
+    }
+    
+    .problem-card .icon {
+      color: var(--accent-coral);
+      margin-bottom: 1rem;
+    }
+    
+    .problem-card h4 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .problem-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    
+    /* Dual Pillars - Value Proposition */
+    .pillars {
+      background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-deep) 100%);
+    }
+    
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    
+    .pillar-card {
+      position: relative;
+      padding: 2.5rem;
+      border-radius: 20px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      overflow: hidden;
+      transition: all 0.5s var(--ease-out-expo);
+    }
+    
+    .pillar-card:hover {
+      transform: translateY(-6px);
+    }
+    
+    .pillar-card.ecosystem { --card-accent: var(--accent-teal); }
+    .pillar-card.spatial { --card-accent: var(--accent-purple); }
+    
+    .pillar-card:hover { border-color: var(--card-accent); }
+    
+    .pillar-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--card-accent);
+    }
+    
+    .pillar-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .pillar-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--card-accent);
+      opacity: 0.15;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .pillar-icon .icon {
+      color: var(--card-accent);
+      opacity: 1;
+    }
+    
+    .pillar-number {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--card-accent);
+      letter-spacing: 0.1em;
+    }
+    
+    .pillar-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    
+    .pillar-tagline {
+      font-size: 0.9rem;
+      color: var(--card-accent);
+      font-weight: 500;
+    }
+    
+    .pillar-desc {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+    
+    .pillar-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .pillar-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      background: var(--bg-glass-light);
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    
+    .pillar-features li:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: var(--card-accent);
+    }
+    
+    .pillar-features li .icon {
+      color: var(--card-accent);
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    
+    /* Convergence Section - Underlying Magic */
+    .convergence {
+      background: var(--bg-deep);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .convergence::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: conic-gradient(from 0deg, var(--accent-teal-dim), var(--accent-purple-dim), var(--accent-coral-dim), var(--accent-teal-dim));
+      border-radius: 50%;
+      opacity: 0.2;
+      filter: blur(80px);
+      animation: rotate 40s linear infinite;
+    }
+    
+    @keyframes rotate {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    .convergence-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* New Convergence Graphic */
+    .convergence-graphic {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 3rem 0;
+      position: relative;
+    }
+    
+    .convergence-orbit {
+      width: 400px;
+      height: 400px;
+      position: relative;
+    }
+    
+    /* Center node */
+    .center-node {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 
+        0 0 60px rgba(0, 212, 170, 0.3),
+        0 0 120px rgba(138, 92, 246, 0.2);
+      z-index: 3;
+    }
+    
+    .center-node .icon {
+      color: var(--bg-deep);
+      width: 40px;
+      height: 40px;
+      margin-bottom: 0.25rem;
+    }
+    
+    .center-node span {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--bg-deep);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    /* Orbital rings */
+    .orbit-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px dashed var(--border-subtle);
+    }
+    
+    .orbit-ring-1 { width: 240px; height: 240px; }
+    .orbit-ring-2 { width: 340px; height: 340px; }
+    .orbit-ring-3 { width: 400px; height: 400px; border-style: solid; border-color: var(--border-subtle); }
+    
+    /* Orbiting nodes */
+    .orbit-node {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--bg-glass);
+      border: 2px solid;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.4s var(--ease-out-expo);
+      z-index: 2;
+    }
+    
+    .orbit-node:hover {
+      transform: scale(1.1);
+    }
+    
+    .orbit-node .icon {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 0.25rem;
+    }
+    
+    .orbit-node span {
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    
+    .orbit-node.ecosystem-node {
+      border-color: var(--accent-teal);
+      box-shadow: 0 0 30px var(--accent-teal-dim);
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .orbit-node.ecosystem-node .icon,
+    .orbit-node.ecosystem-node span { color: var(--accent-teal); }
+    
+    .orbit-node.spatial-node {
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 30px var(--accent-purple-dim);
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .orbit-node.spatial-node .icon,
+    .orbit-node.spatial-node span { color: var(--accent-purple); }
+    
+    .orbit-node.ai-node {
+      border-color: var(--accent-coral);
+      box-shadow: 0 0 30px var(--accent-coral-dim);
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+    }
+    
+    .orbit-node.ai-node .icon,
+    .orbit-node.ai-node span { color: var(--accent-coral); }
+    
+    .orbit-node.network-node {
+      border-color: var(--text-muted);
+      box-shadow: 0 0 20px rgba(255,255,255,0.05);
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+    
+    .orbit-node.network-node .icon,
+    .orbit-node.network-node span { color: var(--text-secondary); }
+    
+    /* Connection lines */
+    .connection-line {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--accent-teal) 50%, transparent 100%);
+      transform-origin: left center;
+      opacity: 0.3;
+      z-index: 1;
+    }
+    
+    .connection-line-1 { width: 120px; transform: translateY(-50%) rotate(0deg); }
+    .connection-line-2 { width: 120px; transform: translateY(-50%) rotate(90deg); }
+    .connection-line-3 { width: 120px; transform: translateY(-50%) rotate(180deg); }
+    .connection-line-4 { width: 120px; transform: translateY(-50%) rotate(270deg); }
+    
+    .vision-statement {
+      text-align: center;
+      padding: 2.5rem;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .vision-statement blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      font-weight: 500;
+      line-height: 1.6;
+      color: var(--text-primary);
+    }
+    
+    .vision-statement cite {
+      display: block;
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-style: normal;
+    }
+    
+    /* Business Model */
+    .business {
+      background: var(--bg-surface);
+    }
+    
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    
+    .pricing-card {
+      padding: 2rem;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+    
+    .pricing-card:hover {
+      transform: translateY(-4px);
+    }
+    
+    .pricing-card.featured {
+      border-color: var(--accent-teal);
+      background: linear-gradient(180deg, var(--accent-teal-dim) 0%, var(--bg-glass) 100%);
+    }
+    
+    .pricing-tier {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    
+    .pricing-card.featured .pricing-tier { color: var(--accent-teal); }
+    
+    .pricing-price {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .pricing-period {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    
+    .pricing-features {
+      list-style: none;
+      text-align: left;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    
+    .pricing-features li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .pricing-features li:last-child { border-bottom: none; }
+    
+    .pricing-features .icon {
+      width: 16px;
+      height: 16px;
+      color: var(--accent-teal);
+    }
+    
+    .revenue-streams {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    
+    .revenue-card {
+      padding: 1.5rem;
+      background: var(--bg-glass-light);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      text-align: center;
+    }
+    
+    .revenue-card .icon {
+      color: var(--accent-purple);
+      margin-bottom: 0.75rem;
+    }
+    
+    .revenue-card h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    
+    .revenue-card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    
+    /* Network Section - Go-to-Market */
+    .network {
+      background: var(--bg-deep);
+    }
+    
+    .network-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+    
+    .network-card {
+      padding: 1.75rem;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      text-align: center;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+    
+    .network-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-teal);
+    }
+    
+    .network-card .icon {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    
+    .network-card:hover .icon { color: var(--accent-teal); }
+    
+    .network-card h4 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+    
+    .network-card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    
+    /* Competitive Section */
+    .competitive {
+      background: var(--bg-surface);
+    }
+    
+    .competitive-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-glass);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+    }
+    
+    .competitive-table th,
+    .competitive-table td {
+      padding: 1rem 1.25rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    
+    .competitive-table th {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--bg-elevated);
+    }
+    
+    .competitive-table td {
+      font-size: 0.9rem;
+    }
+    
+    .competitive-table tr:last-child td { border-bottom: none; }
+    
+    .competitive-table tr.highlight {
+      background: var(--accent-teal-dim);
+    }
+    
+    .competitive-table tr.highlight td {
+      color: var(--accent-teal);
+      font-weight: 600;
+    }
+    
+    .check { color: var(--accent-teal); }
+    .cross { color: var(--accent-coral); opacity: 0.5; }
+    
+    .moat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+    
+    .moat-card {
+      padding: 1.5rem;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+    }
+    
+    .moat-card h4 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .moat-card h4 .icon {
+      width: 18px;
+      height: 18px;
+      color: var(--accent-teal);
+    }
+    
+    .moat-card p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    
+    /* Team Section */
+    .team {
+      background: var(--bg-deep);
+    }
+    
+    .team-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    
+    .team-profile {
+      padding: 2.5rem;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+    }
+    
+    .team-header {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .team-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .team-avatar .icon {
+      color: var(--bg-deep);
+      width: 32px;
+      height: 32px;
+    }
+    
+    .team-info h3 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+    
+    .team-info p {
+      font-size: 0.9rem;
+      color: var(--accent-teal);
+    }
+    
+    .team-bio {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    
+    .team-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .team-skills span {
+      padding: 0.4rem 0.8rem;
+      background: var(--bg-glass-light);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    
+    .team-network {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .network-item {
+      padding: 1.5rem;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+    }
+    
+    .network-item h4 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    
+    .network-item h4 .icon {
+      width: 18px;
+      height: 18px;
+      color: var(--accent-purple);
+    }
+    
+    .network-item p {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    
+    /* Roadmap / Timeline */
+    .roadmap {
+      background: var(--bg-surface);
+    }
+    
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-teal) 0%, var(--accent-purple) 50%, var(--accent-coral) 100%);
+      transform: translateX(-50%);
+    }
+    
+    .timeline-item {
+      display: flex;
+      gap: 3rem;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    
+    .timeline-item:nth-child(even) { flex-direction: row-reverse; }
+    
+    .timeline-content {
+      flex: 1;
+      padding: 1.75rem;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-content { text-align: right; }
+    
+    .timeline-marker {
+      position: absolute;
+      left: 50%;
+      top: 1.75rem;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 3px solid var(--accent-teal);
+      z-index: 1;
+    }
+    
+    .timeline-item:nth-child(2) .timeline-marker { border-color: var(--accent-purple); }
+    .timeline-item:nth-child(3) .timeline-marker { border-color: var(--accent-coral); }
+    
+    .timeline-phase {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent-teal);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+    
+    .timeline-item:nth-child(2) .timeline-phase { color: var(--accent-purple); }
+    .timeline-item:nth-child(3) .timeline-phase { color: var(--accent-coral); }
+    
+    .timeline-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .timeline-desc {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-deep) 100%);
+      text-align: center;
+      padding: 8rem 1.5rem;
+      position: relative;
+    }
+    
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--accent-teal) 50%, transparent 100%);
+    }
+    
+    .cta-content {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    
+    .cta-desc {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    
+    .cta-email {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    
+    .cta-email a {
+      color: var(--accent-teal);
+      text-decoration: none;
+    }
+    
+    .cta-email a:hover { text-decoration: underline; }
+    
+    /* Footer */
+    footer {
+      background: var(--bg-deep);
+      padding: 3rem 1.5rem 2rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    
+    .footer-brand .logo-mark {
+      width: 28px;
+      height: 28px;
+      font-size: 0.75rem;
+    }
+    
+    .footer-info {
+      font-size: 0.85rem;
+    }
+    
+    .footer-info strong {
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+    
+    .footer-tagline {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    
+    .footer-contact {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+    
+    .footer-contact .icon {
+      width: 16px;
+      height: 16px;
+      color: var(--accent-teal);
+    }
+    
+    .footer-contact a {
+      color: var(--accent-teal);
+      text-decoration: none;
+    }
+    
+    .footer-contact a:hover { text-decoration: underline; }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .pillars-grid,
+      .team-content {
+        grid-template-columns: 1fr;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .pricing-grid,
+      .moat-grid,
+      .revenue-streams {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .network-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .convergence-orbit {
+        width: 320px;
+        height: 320px;
+      }
+      
+      .orbit-ring-1 { width: 200px; height: 200px; }
+      .orbit-ring-2 { width: 280px; height: 280px; }
+      .orbit-ring-3 { width: 320px; height: 320px; }
+      
+      .center-node {
+        width: 110px;
+        height: 110px;
+      }
+      
+      .orbit-node {
+        width: 64px;
+        height: 64px;
+      }
+      
+      .orbit-node .icon { width: 20px; height: 20px; }
+      .orbit-node span { font-size: 0.5rem; }
+      
+      .connection-line { width: 100px; }
+    }
+    
+    @media (max-width: 768px) {
+      nav {
+        padding: 1rem 1.25rem;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .nav-contact {
+        display: none;
+      }
+      
+      section {
+        padding: 4rem 1.25rem;
+      }
+      
+      .hero {
+        padding: 6rem 1.25rem 2rem;
+      }
+      
+      .problem-grid,
+      .network-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .competitive-table {
+        font-size: 0.8rem;
+      }
+      
+      .competitive-table th,
+      .competitive-table td {
+        padding: 0.75rem 0.5rem;
+      }
+      
+      .timeline::before {
+        left: 16px;
+      }
+      
+      .timeline-item {
+        flex-direction: column !important;
+        padding-left: 40px;
+        gap: 0;
+      }
+      
+      .timeline-marker {
+        left: 16px !important;
+        top: 0;
+      }
+      
+      .timeline-content {
+        text-align: left !important;
+      }
+      
+      .convergence-orbit {
+        width: 280px;
+        height: 280px;
+      }
+      
+      .orbit-ring-1 { width: 170px; height: 170px; }
+      .orbit-ring-2 { width: 240px; height: 240px; }
+      .orbit-ring-3 { width: 280px; height: 280px; }
+      
+      .center-node {
+        width: 90px;
+        height: 90px;
+      }
+      
+      .center-node .icon { width: 28px; height: 28px; }
+      .center-node span { font-size: 0.6rem; }
+      
+      .orbit-node {
+        width: 54px;
+        height: 54px;
+      }
+      
+      .orbit-node .icon { width: 16px; height: 16px; }
+      .orbit-node span { font-size: 0.45rem; }
+      
+      .connection-line { width: 85px; }
+      
+      .footer-content {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 0.95rem;
+      }
+      
+      .btn {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .hero-cta {
+        flex-direction: column;
+        width: 100%;
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .section-title {
+        font-size: 1.75rem;
+      }
+      
+      .convergence-orbit {
+        width: 240px;
+        height: 240px;
+      }
+      
+      .orbit-ring-1 { width: 140px; height: 140px; }
+      .orbit-ring-2 { width: 200px; height: 200px; }
+      .orbit-ring-3 { width: 240px; height: 240px; }
+      
+      .center-node {
+        width: 76px;
+        height: 76px;
+      }
+      
+      .center-node .icon { width: 24px; height: 24px; }
+      .center-node span { font-size: 0.5rem; }
+      
+      .orbit-node {
+        width: 46px;
+        height: 46px;
+      }
+      
+      .orbit-node .icon { width: 14px; height: 14px; }
+      .orbit-node span { display: none; }
+      
+      .connection-line { width: 70px; }
+    }
+    
+    /* Animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.7s var(--ease-out-expo);
+    }
+    
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+  <!-- SVG Icon Definitions -->
+  <svg style="display: none;">
+    <defs>
+      <!-- Globe/Network -->
+      <symbol id="icon-globe" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M2 12h20"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </symbol>
+      
+      <!-- AR Glasses -->
+      <symbol id="icon-glasses" viewBox="0 0 24 24">
+        <path d="M2 8h20"/>
+        <rect x="2" y="10" width="7" height="5" rx="1.5"/>
+        <rect x="15" y="10" width="7" height="5" rx="1.5"/>
+        <path d="M9 12.5h6"/>
+        <path d="M2 10V8"/>
+        <path d="M22 10V8"/>
+      </symbol>
+      
+      <!-- Brain/AI -->
+      <symbol id="icon-brain" viewBox="0 0 24 24">
+        <path d="M12 4.5a2.5 2.5 0 0 0-4.96-.46 2.5 2.5 0 0 0-1.98 3 2.5 2.5 0 0 0-1.32 4.24 3 3 0 0 0 .34 5.58 2.5 2.5 0 0 0 2.96 3.08A2.5 2.5 0 0 0 12 19.5"/>
+        <path d="M12 4.5a2.5 2.5 0 0 1 4.96-.46 2.5 2.5 0 0 1 1.98 3 2.5 2.5 0 0 1 1.32 4.24 3 3 0 0 1-.34 5.58 2.5 2.5 0 0 1-2.96 3.08A2.5 2.5 0 0 1 12 19.5"/>
+        <path d="M12 4.5v15"/>
+      </symbol>
+      
+      <!-- Network/Connect -->
+      <symbol id="icon-network" viewBox="0 0 24 24">
+        <circle cx="12" cy="5" r="2"/>
+        <circle cx="5" cy="19" r="2"/>
+        <circle cx="19" cy="19" r="2"/>
+        <path d="M12 7v5"/>
+        <path d="M7.5 17.5l3.5-3.5"/>
+        <path d="M16.5 17.5l-3.5-3.5"/>
+        <circle cx="12" cy="12" r="1"/>
+      </symbol>
+      
+      <!-- Workflow/Automation -->
+      <symbol id="icon-workflow" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="6" height="6" rx="1"/>
+        <rect x="15" y="3" width="6" height="6" rx="1"/>
+        <rect x="9" y="15" width="6" height="6" rx="1"/>
+        <path d="M6 9v3a3 3 0 0 0 3 3h2"/>
+        <path d="M18 9v3a3 3 0 0 1-3 3h-2"/>
+      </symbol>
+      
+      <!-- Tools/Build -->
+      <symbol id="icon-tools" viewBox="0 0 24 24">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+      </symbol>
+      
+      <!-- Users/Community -->
+      <symbol id="icon-users" viewBox="0 0 24 24">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </symbol>
+      
+      <!-- Discovery/Search -->
+      <symbol id="icon-discover" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"/>
+        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+      </symbol>
+      
+      <!-- Eye/Vision -->
+      <symbol id="icon-eye" viewBox="0 0 24 24">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+        <circle cx="12" cy="12" r="3"/>
+      </symbol>
+      
+      <!-- 3D/Cube -->
+      <symbol id="icon-cube" viewBox="0 0 24 24">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+        <line x1="12" y1="22.08" x2="12" y2="12"/>
+      </symbol>
+      
+      <!-- Context/Layers -->
+      <symbol id="icon-layers" viewBox="0 0 24 24">
+        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+        <polyline points="2 17 12 22 22 17"/>
+        <polyline points="2 12 12 17 22 12"/>
+      </symbol>
+      
+      <!-- Lightning/Speed -->
+      <symbol id="icon-lightning" viewBox="0 0 24 24">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </symbol>
+      
+      <!-- Shield/Security -->
+      <symbol id="icon-shield" viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <polyline points="9 12 11 14 15 10"/>
+      </symbol>
+      
+      <!-- Target -->
+      <symbol id="icon-target" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"/>
+        <circle cx="12" cy="12" r="6"/>
+        <circle cx="12" cy="12" r="2"/>
+      </symbol>
+      
+      <!-- Graduation/Education -->
+      <symbol id="icon-graduation" viewBox="0 0 24 24">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+      </symbol>
+      
+      <!-- Building/Industry -->
+      <symbol id="icon-building" viewBox="0 0 24 24">
+        <rect x="4" y="2" width="16" height="20" rx="2"/>
+        <path d="M9 22v-4h6v4"/>
+        <path d="M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01M8 14h.01M16 14h.01M12 14h.01"/>
+      </symbol>
+      
+      <!-- Cog/Manufacturing -->
+      <symbol id="icon-cog" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </symbol>
+      
+      <!-- Palette/Creative -->
+      <symbol id="icon-palette" viewBox="0 0 24 24">
+        <circle cx="13.5" cy="6.5" r="1.5"/>
+        <circle cx="17.5" cy="10.5" r="1.5"/>
+        <circle cx="8.5" cy="7.5" r="1.5"/>
+        <circle cx="6.5" cy="12.5" r="1.5"/>
+        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z"/>
+      </symbol>
+      
+      <!-- Check -->
+      <symbol id="icon-check" viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12"/>
+      </symbol>
+      
+      <!-- X/Cross -->
+      <symbol id="icon-x" viewBox="0 0 24 24">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </symbol>
+      
+      <!-- Mail -->
+      <symbol id="icon-mail" viewBox="0 0 24 24">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+      </symbol>
+      
+      <!-- User -->
+      <symbol id="icon-user" viewBox="0 0 24 24">
+        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </symbol>
+      
+      <!-- Sparkle/Magic -->
+      <symbol id="icon-sparkle" viewBox="0 0 24 24">
+        <path d="M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3z"/>
+        <path d="M19 15l.5 1.5L21 17l-1.5.5L19 19l-.5-1.5L17 17l1.5-.5L19 15z"/>
+        <path d="M5 3l.5 1.5L7 5l-1.5.5L5 7l-.5-1.5L3 5l1.5-.5L5 3z"/>
+      </symbol>
+      
+      <!-- Arrow Right -->
+      <symbol id="icon-arrow-right" viewBox="0 0 24 24">
+        <line x1="5" y1="12" x2="19" y2="12"/>
+        <polyline points="12 5 19 12 12 19"/>
+      </symbol>
+      
+      <!-- Menu -->
+      <symbol id="icon-menu" viewBox="0 0 24 24">
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </symbol>
+      
+      <!-- Broken/Problem -->
+      <symbol id="icon-broken" viewBox="0 0 24 24">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+        <path d="M2 17l10 5 10-5"/>
+        <path d="M2 12l10 5 10-5"/>
+        <path d="M14 4l-2 18"/>
+      </symbol>
+      
+      <!-- Lock/Barrier -->
+      <symbol id="icon-lock" viewBox="0 0 24 24">
+        <rect x="3" y="11" width="18" height="11" rx="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </symbol>
+      
+      <!-- Dollar/Cost -->
+      <symbol id="icon-dollar" viewBox="0 0 24 24">
+        <line x1="12" y1="1" x2="12" y2="23"/>
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <a href="#" class="logo">
+      <div class="logo-mark">4E</div>
+      <span>Ecosystem</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#problem">The Problem</a></li>
+      <li><a href="#pillars">Solution</a></li>
+      <li><a href="#convergence">Vision</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+    </ul>
+    <a href="mailto:sean@4e.ie" class="nav-contact">
+      <svg class="icon"><use href="#icon-mail"/></svg>
+      Get in Touch
+    </a>
+    <button class="mobile-menu-btn" aria-label="Menu">
+      <svg class="icon"><use href="#icon-menu"/></svg>
+    </button>
+  </nav>
+
+  <!-- Hero - Slide 01: Title -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="kawasaki-label">01 — Title</div>
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Enhancing Reality ✦ Amplifying Results
+      </div>
+      <h1>
+        Two Dimensions.<br>
+        <span class="gradient-text">One Unified Future.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Where intelligent ecosystems meet spatial computing — empowering creators, connecting industries, and redefining human-AI collaboration.
+      </p>
+      <div class="hero-cta">
+        <a href="#pillars" class="btn btn-primary">
+          Explore the Vision
+          <svg class="icon"><use href="#icon-arrow-right"/></svg>
+        </a>
+        <a href="mailto:sean@4e.ie" class="btn btn-secondary">
+          <svg class="icon"><use href="#icon-mail"/></svg>
+          Contact Us
+        </a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="mouse"></div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- Problem - Slide 02 -->
+  <section class="problem" id="problem">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="kawasaki-label">02 — Problem / Opportunity</div>
+        <span class="section-label">
+          <svg class="icon"><use href="#icon-target"/></svg>
+          The Challenge
+        </span>
+        <h2 class="section-title">The Creative Workflow Crisis</h2>
+        <p class="section-desc">
+          Creators and professionals face fragmented tools, prohibitive costs, and technical barriers that prevent them from reaching their full potential.
+        </p>
+      </div>
+      
+      <div class="problem-grid">
+        <div class="problem-card reveal reveal-delay-1">
+          <svg class="icon icon-lg"><use href="#icon-broken"/></svg>
+          <h4>Fragmented Tools</h4>
+          <p>Professionals juggle 8-12 disconnected apps, losing time and context switching between workflows.</p>
+        </div>
+        <div class="problem-card reveal reveal-delay-2">
+          <svg class="icon icon-lg"><use href="#icon-dollar"/></svg>
+          <h4>Prohibitive Costs</h4>
+          <p>Enterprise platforms cost €50K+ annually, locking out independents, educators, and small teams.</p>
+        </div>
+        <div class="problem-card reveal reveal-delay-3">
+          <svg class="icon icon-lg"><use href="#icon-lock"/></svg>
+          <h4>Technical Barriers</h4>
+          <p>Complex workflows require specialized skills most users lack—preventing adoption of powerful technologies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dual Pillars - Slide 03: Value Proposition -->
+  <section class="pillars" id="pillars">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="kawasaki-label">03 — Value Proposition</div>
+        <span class="section-label">
+          <svg class="icon"><use href="#icon-sparkle"/></svg>
+          The Dual Approach
+        </span>
+        <h2 class="section-title">Two Pillars. Infinite Possibilities.</h2>
+        <p class="section-desc">
+          Our vision operates on two interconnected dimensions—each powerful alone, but transformative together.
+        </p>
+      </div>
+      
+      <div class="pillars-grid">
+        <!-- Ecosystem Pillar -->
+        <div class="pillar-card ecosystem reveal reveal-delay-1">
+          <div class="pillar-header">
+            <div class="pillar-icon">
+              <svg class="icon icon-xl"><use href="#icon-globe"/></svg>
+            </div>
+            <div>
+              <div class="pillar-number">DIMENSION 01</div>
+              <h3 class="pillar-title">Ecosystem Intelligence</h3>
+              <p class="pillar-tagline">The Connected Workflow Platform</p>
+            </div>
+          </div>
+          <p class="pillar-desc">
+            A unified environment for managing day-to-day operations end-to-end, with AI assistants that learn, adapt, and empower users to automate workflows—and build their own tools.
+          </p>
+          <ul class="pillar-features">
+            <li>
+              <svg class="icon"><use href="#icon-brain"/></svg>
+              AI-augmented workflows that build, implement, and optimize
+            </li>
+            <li>
+              <svg class="icon"><use href="#icon-tools"/></svg>
+              Empower users to create their own custom tools
+            </li>
+            <li>
+              <svg class="icon"><use href="#icon-discover"/></svg>
+              Cross-sector discovery connecting academia, industry, and creators
+            </li>
+            <li>
+              <svg class="icon"><use href="#icon-users"/></svg>
+              Peer-to-peer network for real-time collaboration
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Spatial Pillar -->
+        <div class="pillar-card spatial reveal reveal-delay-2">
+          <div class="pillar-header">
+            <div class="pillar-icon">
+              <svg class="icon icon-xl"><use href="#icon-glasses"/></svg>
+            </div>
+            <div>
+              <div class="pillar-number">DIMENSION 02</div>
+              <h3 class="pillar-title">Spatial Computing</h3>
+              <p class="pillar-tagline">The Immersive Interface Layer</p>
+            </div>
+          </div>
+          <p class="pillar-desc">
+            AI assistants that see what you see, hear what you hear—extending the digital workspace into three-dimensional space through AR glasses and spatial devices.
+          </p>
+          <ul class="pillar-features">
+            <li>
+              <svg class="icon"><use href="#icon-eye"/></svg>
+              Multimodal perception—AI understanding visual and audio context
+            </li>
+            <li>
+              <svg class="icon"><use href="#icon-cube"/></svg>
+              World-anchored content pinned to physical space
+            </li>
+            <li>
+              <svg class="icon"><use href="#icon-layers"/></svg>
+              3D creative tools—design in the space around you
+            </li>
+            <li>
+              <svg class="icon"><use href="#icon-brain"/></svg>
+              Contextual intelligence adapting to your environment
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Convergence - Slide 04: Underlying Magic -->
+  <section class="convergence" id="convergence">
+    <div class="container convergence-content">
+      <div class="section-header reveal">
+        <div class="kawasaki-label">04 — Underlying Magic</div>
+        <span class="section-label">
+          <svg class="icon"><use href="#icon-sparkle"/></svg>
+          The Ultimate Vision
+        </span>
+        <h2 class="section-title">Where Both Worlds Converge</h2>
+        <p class="section-desc">
+          The future isn't about choosing between digital ecosystems and spatial interfaces—it's about their seamless integration.
+        </p>
+      </div>
+      
+      <!-- Improved Convergence Graphic -->
+      <div class="convergence-graphic reveal">
+        <div class="convergence-orbit">
+          <!-- Orbital rings -->
+          <div class="orbit-ring orbit-ring-1"></div>
+          <div class="orbit-ring orbit-ring-2"></div>
+          <div class="orbit-ring orbit-ring-3"></div>
+          
+          <!-- Connection lines -->
+          <div class="connection-line connection-line-1"></div>
+          <div class="connection-line connection-line-2"></div>
+          <div class="connection-line connection-line-3"></div>
+          <div class="connection-line connection-line-4"></div>
+          
+          <!-- Center node -->
+          <div class="center-node">
+            <svg class="icon"><use href="#icon-sparkle"/></svg>
+            <span>Unified<br>Experience</span>
+          </div>
+          
+          <!-- Orbiting nodes -->
+          <div class="orbit-node ecosystem-node">
+            <svg class="icon"><use href="#icon-globe"/></svg>
+            <span>Ecosystem</span>
+          </div>
+          
+          <div class="orbit-node spatial-node">
+            <svg class="icon"><use href="#icon-glasses"/></svg>
+            <span>Spatial</span>
+          </div>
+          
+          <div class="orbit-node ai-node">
+            <svg class="icon"><use href="#icon-brain"/></svg>
+            <span>AI Agents</span>
+          </div>
+          
+          <div class="orbit-node network-node">
+            <svg class="icon"><use href="#icon-network"/></svg>
+            <span>Network</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="vision-statement reveal">
+        <blockquote>
+          "Imagine managing your projects while AR glasses display real-time data anchored to physical prototypes. AI assistants that see your workspace, understand context, and orchestrate workflows—all within a connected network spanning industries, academia, and creative disciplines."
+        </blockquote>
+        <cite>— The 4E Vision for Human-AI Collaboration</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- Business Model - Slide 05 -->
+  <section class="business" id="business">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="kawasaki-label">05 — Business Model</div>
+        <span class="section-label">
+          <svg class="icon"><use href="#icon-dollar"/></svg>
+          Revenue Streams
+        </span>
+        <h2 class="section-title">Sustainable Growth Model</h2>
+        <p class="section-desc">
+          Multiple revenue streams designed for accessibility and scale.
+        </p>
+      </div>
+      
+      <div class="pricing-grid reveal">
+        <div class="pricing-card">
+          <div class="pricing-tier">Starter</div>
+          <div class="pricing-price">€0</div>
+          <div class="pricing-period">Forever free</div>
+          <ul class="pricing-features">
+            <li><svg class="icon"><use href="#icon-check"/></svg> Basic ecosystem access</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg> 3 projects</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg> Community support</li>
+          </ul>
+        </div>
+        <div class="pricing-card featured">
+          <div class="pricing-tier">Professional</div>
+          <div class="pricing-price">€29</div>
+          <div class="pricing-period">per month</div>
+          <ul class="pricing-features">
+            <li><svg class="icon"><use href="#icon-check"/></svg> Full ecosystem + spatial</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg> AI agents & automation</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg> Custom tool builder</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg> Priority support</li>
+          </ul>
+        </div>
+        <div class="pricing-card">
+          <div class="pricing-tier">Enterprise</div>
+          <div class="pricing-price">€99</div>
+          <div class="pricing-period">per seat / month</div>
+          <ul class="pricing-features">
+            <li><svg class="icon"><use href="#icon-check"/></svg> White-label solutions</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg> Custom integrations</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg> SSO & admin controls</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg> Dedicated success manager</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="revenue-streams reveal">
+        <div class="revenue-card">
+          <svg class="icon icon-lg"><use href="#icon-tools"/></svg>
+          <h4>Tool Marketplace</h4>
+          <p>User-created tools & templates</p>
+        </div>
+        <div class="revenue-card">
+          <svg class="icon icon-lg"><use href="#icon-graduation"/></svg>
+          <h4>Training Programs</h4>
+          <p>Workshops & certifications</p>
+        </div>
+        <div class="revenue-card">
+          <svg class="icon icon-lg"><use href="#icon-building"/></svg>
+          <h4>Education Licensing</h4>
+          <p>Institutional site licenses</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Network Section - Slide 06: Go-to-Market -->
+  <section class="network" id="network">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="kawasaki-label">06 — Go-to-Market</div>
+        <span class="section-label">
+          <svg class="icon"><use href="#icon-network"/></svg>
+          Connected Sectors
+        </span>
+        <h2 class="section-title">Bridging Disciplines</h2>
+        <p class="section-desc">
+          A discovery network connecting people, knowledge, and opportunities across traditionally siloed sectors.
+        </p>
+      </div>
+      
+      <div class="network-grid">
+        <div class="network-card reveal reveal-delay-1">
+          <svg class="icon icon-lg"><use href="#icon-graduation"/></svg>
+          <h4>Academia</h4>
+          <p>Research institutions & educational programs</p>
+        </div>
+        <div class="network-card reveal reveal-delay-2">
+          <svg class="icon icon-lg"><use href="#icon-building"/></svg>
+          <h4>Industry</h4>
+          <p>Enterprise solutions & professional services</p>
+        </div>
+        <div class="network-card reveal reveal-delay-3">
+          <svg class="icon icon-lg"><use href="#icon-cog"/></svg>
+          <h4>Manufacturing</h4>
+          <p>Production workflows & supply chain</p>
+        </div>
+        <div class="network-card reveal reveal-delay-4">
+          <svg class="icon icon-lg"><use href="#icon-palette"/></svg>
+          <h4>Creative</h4>
+          <p>Artists, designers & content creators</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Competitive - Slide 07 -->
+  <section class="competitive" id="competitive">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="kawasaki-label">07 — Competitive Analysis</div>
+        <span class="section-label">
+          <svg class="icon"><use href="#icon-target"/></svg>
+          Market Position
+        </span>
+        <h2 class="section-title">Our Competitive Edge</h2>
+      </div>
+      
+      <table class="competitive-table reveal">
+        <thead>
+          <tr>
+            <th>Solution</th>
+            <th>Project Mgmt</th>
+            <th>AR/VR</th>
+            <th>AI Agents</th>
+            <th>Custom Tools</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>8th Wall</td>
+            <td><svg class="icon cross"><use href="#icon-x"/></svg></td>
+            <td><svg class="icon check"><use href="#icon-check"/></svg></td>
+            <td><svg class="icon cross"><use href="#icon-x"/></svg></td>
+            <td><svg class="icon cross"><use href="#icon-x"/></svg></td>
+            <td>€50K+/yr</td>
+          </tr>
+          <tr>
+            <td>Monday.com</td>
+            <td><svg class="icon check"><use href="#icon-check"/></svg></td>
+            <td><svg class="icon cross"><use href="#icon-x"/></svg></td>
+            <td>Limited</td>
+            <td><svg class="icon cross"><use href="#icon-x"/></svg></td>
+            <td>€36/seat</td>
+          </tr>
+          <tr>
+            <td>Unity/Unreal</td>
+            <td><svg class="icon cross"><use href="#icon-x"/></svg></td>
+            <td><svg class="icon check"><use href="#icon-check"/></svg></td>
+            <td>Plugins</td>
+            <td>Code only</td>
+            <td>Revenue %</td>
+          </tr>
+          <tr class="highlight">
+            <td>4E Ecosystem</td>
+            <td><svg class="icon check"><use href="#icon-check"/></svg></td>
+            <td><svg class="icon check"><use href="#icon-check"/></svg></td>
+            <td><svg class="icon check"><use href="#icon-check"/></svg></td>
+            <td><svg class="icon check"><use href="#icon-check"/></svg></td>
+            <td>€29/mo</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="moat-grid reveal">
+        <div class="moat-card">
+          <h4>
+            <svg class="icon"><use href="#icon-target"/></svg>
+            Our Moat
+          </h4>
+          <p>Only platform combining ecosystem management with spatial computing and user-built tools.</p>
+        </div>
+        <div class="moat-card">
+          <h4>
+            <svg class="icon"><use href="#icon-lightning"/></svg>
+            Speed to Market
+          </h4>
+          <p>Web-native deployment. No app stores. Instant updates reach all users.</p>
+        </div>
+        <div class="moat-card">
+          <h4>
+            <svg class="icon"><use href="#icon-shield"/></svg>
+            Cost Advantage
+          </h4>
+          <p>10x cheaper than enterprise alternatives. Accessible to all.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team - Slide 08 -->
+  <section class="team" id="team">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="kawasaki-label">08 — Management Team</div>
+        <span class="section-label">
+          <svg class="icon"><use href="#icon-user"/></svg>
+          Leadership
+        </span>
+        <h2 class="section-title">Built by Practitioners</h2>
+      </div>
+      
+      <div class="team-content">
+        <div class="team-profile reveal">
+          <div class="team-header">
+            <div class="team-avatar">
+              <svg class="icon"><use href="#icon-user"/></svg>
+            </div>
+            <div class="team-info">
+              <h3>Seán</h3>
+              <p>Founder & Lead Developer</p>
+            </div>
+          </div>
+          <p class="team-bio">
+            15+ years in education across primary, secondary, and tertiary levels. Currently teaching Visual Arts, Performing Arts, and 3D Modelling at CCIS. Expert in AR/VR workflows, creative technologies, and building tools that empower users.
+          </p>
+          <div class="team-skills">
+            <span>AR/VR Development</span>
+            <span>Three.js & React</span>
+            <span>Firebase Architecture</span>
+            <span>Curriculum Design</span>
+            <span>Python & TypeScript</span>
+          </div>
+        </div>
+        
+        <div class="team-network reveal reveal-delay-1">
+          <div class="network-item">
+            <h4>
+              <svg class="icon"><use href="#icon-graduation"/></svg>
+              Education Network
+            </h4>
+            <p>Direct connections to CCIS, Culture Works, and Creative Technologies Skillnet.</p>
+          </div>
+          <div class="network-item">
+            <h4>
+              <svg class="icon"><use href="#icon-tools"/></svg>
+              Technical Community
+            </h4>
+            <p>Active contributor to open-source projects and creative tools ecosystem.</p>
+          </div>
+          <div class="network-item">
+            <h4>
+              <svg class="icon"><use href="#icon-lightning"/></svg>
+              Growth Mode
+            </h4>
+            <p>Seeking technical co-founder and advisors with EdTech or XR experience.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap - Slides 09 & 10 -->
+  <section class="roadmap" id="roadmap">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="kawasaki-label">09/10 — Projections & Status</div>
+        <span class="section-label">
+          <svg class="icon"><use href="#icon-workflow"/></svg>
+          Strategic Trajectory
+        </span>
+        <h2 class="section-title">Building Toward Convergence</h2>
+        <p class="section-desc">
+          A phased approach designed for sustainable growth and technological adaptability.
+        </p>
+      </div>
+      
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-phase">Phase 01 — Foundation</div>
+            <h3 class="timeline-title">Ecosystem Core</h3>
+            <p class="timeline-desc">
+              Launch PM Hub, AI agent framework, and custom tool builder. Establish education partnerships. Target: €45K ARR, 100 users.
+            </p>
+          </div>
+          <div style="flex: 1;"></div>
+        </div>
+        
+        <div class="timeline-item reveal">
+          <div class="timeline-marker"></div>
+          <div style="flex: 1;"></div>
+          <div class="timeline-content">
+            <div class="timeline-phase">Phase 02 — Expansion</div>
+            <h3 class="timeline-title">Spatial Layer</h3>
+            <p class="timeline-desc">
+              Deploy 4E AR Engine for web and device experiences. Integrate multimodal AI perception. Target: €180K ARR, 300 users.
+            </p>
+          </div>
+        </div>
+        
+        <div class="timeline-item reveal">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-phase">Phase 03 — Convergence</div>
+            <h3 class="timeline-title">Unified Platform</h3>
+            <p class="timeline-desc">
+              Merge ecosystem with spatial computing. Full AR glasses integration, ambient AI assistants, enterprise scale. Target: €520K ARR.
+            </p>
+          </div>
+          <div style="flex: 1;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-content reveal">
+      <h2 class="cta-title">Ready to Shape the Future?</h2>
+      <p class="cta-desc">
+        Join us in building the next generation of connected, intelligent, and immersive experiences.
+      </p>
+      <div class="cta-buttons">
+        <a href="mailto:sean@4e.ie?subject=Early%20Access%20Request" class="btn btn-primary">
+          Request Early Access
+          <svg class="icon"><use href="#icon-arrow-right"/></svg>
+        </a>
+        <a href="mailto:sean@4e.ie?subject=Partnership%20Inquiry" class="btn btn-secondary">
+          <svg class="icon"><use href="#icon-users"/></svg>
+          Partner With Us
+        </a>
+      </div>
+      <div class="cta-email">
+        <svg class="icon"><use href="#icon-mail"/></svg>
+        <span>Direct contact:</span>
+        <a href="mailto:sean@4e.ie">sean@4e.ie</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="logo-mark">4E</div>
+        <div class="footer-info">
+          <strong>4E Virtual Design</strong>
+          <span class="footer-tagline">Enhancing Reality ✦ Amplifying Results</span>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <svg class="icon"><use href="#icon-mail"/></svg>
+        <a href="mailto:sean@4e.ie">sean@4e.ie</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    let lastScroll = 0;
+    
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+      
+      if (currentScroll > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+      
+      lastScroll = currentScroll;
+    });
+    
+    // Reveal on scroll with IntersectionObserver
+    const revealElements = document.querySelectorAll('.reveal');
+    
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    revealElements.forEach(el => revealObserver.observe(el));
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offset = 80;
+          const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

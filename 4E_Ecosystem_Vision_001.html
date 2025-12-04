@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4E Ecosystem — The Future of Connected Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #050508;
+      --bg-surface: #0a0a12;
+      --bg-elevated: #12121e;
+      --bg-glass: rgba(18, 18, 30, 0.6);
+      --bg-glass-light: rgba(255, 255, 255, 0.03);
+      
+      --accent-teal: #00d4aa;
+      --accent-teal-dim: rgba(0, 212, 170, 0.15);
+      --accent-purple: #8a5cf6;
+      --accent-purple-dim: rgba(138, 92, 246, 0.15);
+      --accent-coral: #ff6b9d;
+      --accent-coral-dim: rgba(255, 107, 157, 0.15);
+      --accent-gold: #f4c542;
+      
+      --text-primary: #f0f0f5;
+      --text-secondary: rgba(240, 240, 245, 0.7);
+      --text-muted: rgba(240, 240, 245, 0.4);
+      
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(0, 212, 170, 0.3);
+      
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Space Grotesk', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+    
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-surface); }
+    ::-webkit-scrollbar-thumb { 
+      background: var(--accent-teal-dim); 
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-teal); }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(180deg, var(--bg-deep) 0%, transparent 100%);
+      transition: all 0.4s var(--ease-out-expo);
+    }
+    
+    nav.scrolled {
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent-teal);
+      transition: width 0.3s var(--ease-out-expo);
+    }
+    
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a:hover::after { width: 100%; }
+    
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150%;
+      height: 150%;
+      background: radial-gradient(ellipse at center, var(--accent-teal-dim) 0%, transparent 50%);
+      opacity: 0.5;
+      animation: pulse 8s ease-in-out infinite;
+    }
+    
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      right: -20%;
+      width: 80%;
+      height: 80%;
+      background: radial-gradient(ellipse at center, var(--accent-purple-dim) 0%, transparent 50%);
+      opacity: 0.4;
+      animation: pulse 10s ease-in-out infinite reverse;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+      50% { opacity: 0.6; transform: translateX(-50%) scale(1.1); }
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+    }
+    
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.25rem;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glow);
+      border-radius: 100px;
+      font-size: 0.85rem;
+      color: var(--accent-teal);
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.8s var(--ease-out-expo) both;
+    }
+    
+    .hero-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--accent-teal);
+      border-radius: 50%;
+      animation: blink 2s ease-in-out infinite;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.8s var(--ease-out-expo) 0.1s both;
+    }
+    
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 50%, var(--accent-coral) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.35rem;
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin: 0 auto 3rem;
+      animation: fadeInUp 0.8s var(--ease-out-expo) 0.2s both;
+    }
+    
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s var(--ease-out-expo) 0.3s both;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out-expo);
+      border: none;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-teal) 0%, #00b894 100%);
+      color: var(--bg-deep);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(0, 212, 170, 0.3);
+    }
+    
+    .btn-secondary {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+    }
+    
+    .btn-secondary:hover {
+      border-color: var(--accent-teal);
+      background: var(--accent-teal-dim);
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      animation: fadeInUp 0.8s var(--ease-out-expo) 0.5s both;
+    }
+    
+    .scroll-indicator .mouse {
+      width: 24px;
+      height: 38px;
+      border: 2px solid var(--text-muted);
+      border-radius: 12px;
+      position: relative;
+    }
+    
+    .scroll-indicator .mouse::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 8px;
+      background: var(--accent-teal);
+      border-radius: 2px;
+      animation: scrollDown 2s ease-in-out infinite;
+    }
+    
+    @keyframes scrollDown {
+      0%, 100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 0.3; transform: translateX(-50%) translateY(10px); }
+    }
+    
+    /* Section Styles */
+    section {
+      padding: 8rem 2rem;
+      position: relative;
+    }
+    
+    .section-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 5rem;
+    }
+    
+    .section-label {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent-teal);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    
+    .section-desc {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    
+    /* Dual Pillars Section */
+    .pillars {
+      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-surface) 50%, var(--bg-deep) 100%);
+    }
+    
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .pillar-card {
+      position: relative;
+      padding: 3rem;
+      border-radius: 24px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+      transition: all 0.5s var(--ease-out-expo);
+    }
+    
+    .pillar-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-teal);
+    }
+    
+    .pillar-card.ecosystem { --card-accent: var(--accent-teal); }
+    .pillar-card.spatial { --card-accent: var(--accent-purple); }
+    
+    .pillar-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--card-accent) 0%, transparent 100%);
+    }
+    
+    .pillar-card::after {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, var(--card-accent) 0%, transparent 70%);
+      opacity: 0.08;
+      transition: opacity 0.5s ease;
+    }
+    
+    .pillar-card:hover::after { opacity: 0.15; }
+    
+    .pillar-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--card-accent) 0%, rgba(255,255,255,0.1) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .pillar-number {
+      position: absolute;
+      top: 2rem;
+      right: 2.5rem;
+      font-family: var(--font-display);
+      font-size: 6rem;
+      font-weight: 800;
+      color: var(--card-accent);
+      opacity: 0.1;
+      line-height: 1;
+    }
+    
+    .pillar-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .pillar-tagline {
+      font-size: 1.1rem;
+      color: var(--card-accent);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+    
+    .pillar-desc {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .pillar-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .pillar-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--bg-glass-light);
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+    }
+    
+    .pillar-features li:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: var(--card-accent);
+    }
+    
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--card-accent);
+      opacity: 0.2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    
+    .feature-content h4 {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    
+    .feature-content p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    
+    /* Convergence Section */
+    .convergence {
+      background: var(--bg-surface);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .convergence::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: conic-gradient(from 0deg, var(--accent-teal-dim), var(--accent-purple-dim), var(--accent-coral-dim), var(--accent-teal-dim));
+      border-radius: 50%;
+      opacity: 0.3;
+      filter: blur(100px);
+      animation: rotate 30s linear infinite;
+    }
+    
+    @keyframes rotate {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    .convergence-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .convergence-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      margin: 4rem 0;
+    }
+    
+    .convergence-node {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: var(--bg-glass);
+      border: 2px solid;
+      transition: all 0.4s var(--ease-out-expo);
+    }
+    
+    .convergence-node.ecosystem-node {
+      border-color: var(--accent-teal);
+      box-shadow: 0 0 60px var(--accent-teal-dim);
+    }
+    
+    .convergence-node.spatial-node {
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 60px var(--accent-purple-dim);
+    }
+    
+    .convergence-node:hover {
+      transform: scale(1.1);
+    }
+    
+    .convergence-node span {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .convergence-node p {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .convergence-bridge {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .bridge-line {
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-teal), var(--accent-purple));
+      border-radius: 2px;
+      position: relative;
+    }
+    
+    .bridge-line::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      filter: blur(8px);
+    }
+    
+    .convergence-center {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 50%, var(--accent-coral) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 0 80px rgba(138, 92, 246, 0.4);
+      animation: glow 3s ease-in-out infinite;
+    }
+    
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 60px rgba(138, 92, 246, 0.3); }
+      50% { box-shadow: 0 0 100px rgba(138, 92, 246, 0.5), 0 0 140px rgba(0, 212, 170, 0.3); }
+    }
+    
+    .convergence-center span {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .convergence-center p {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--bg-deep);
+    }
+    
+    .vision-statement {
+      text-align: center;
+      padding: 3rem;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+    }
+    
+    .vision-statement blockquote {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 500;
+      line-height: 1.6;
+      font-style: italic;
+      color: var(--text-primary);
+    }
+    
+    .vision-statement cite {
+      display: block;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-style: normal;
+    }
+    
+    /* Network Section */
+    .network {
+      background: var(--bg-deep);
+    }
+    
+    .network-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .network-card {
+      padding: 2rem;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.4s var(--ease-out-expo);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .network-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent-teal-dim) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    
+    .network-card:hover::before { opacity: 1; }
+    
+    .network-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-teal);
+    }
+    
+    .network-card span {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .network-card h4 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .network-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Timeline / Roadmap */
+    .roadmap {
+      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-surface) 100%);
+    }
+    
+    .timeline {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent-teal) 0%, var(--accent-purple) 50%, var(--accent-coral) 100%);
+      transform: translateX(-50%);
+    }
+    
+    .timeline-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 3rem;
+      margin-bottom: 4rem;
+      position: relative;
+    }
+    
+    .timeline-item:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    
+    .timeline-content {
+      flex: 1;
+      padding: 2rem;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-content {
+      text-align: right;
+    }
+    
+    .timeline-marker {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 3px solid var(--accent-teal);
+      z-index: 1;
+    }
+    
+    .timeline-item:nth-child(2) .timeline-marker { border-color: var(--accent-purple); }
+    .timeline-item:nth-child(3) .timeline-marker { border-color: var(--accent-coral); }
+    
+    .timeline-phase {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-teal);
+      margin-bottom: 0.5rem;
+    }
+    
+    .timeline-item:nth-child(2) .timeline-phase { color: var(--accent-purple); }
+    .timeline-item:nth-child(3) .timeline-phase { color: var(--accent-coral); }
+    
+    .timeline-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    
+    .timeline-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-deep) 100%);
+      text-align: center;
+      padding: 10rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, var(--accent-teal) 50%, transparent 100%);
+    }
+    
+    .cta-content {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    
+    .cta-desc {
+      color: var(--text-secondary);
+      font-size: 1.15rem;
+      margin-bottom: 2.5rem;
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--bg-deep);
+      padding: 4rem 2rem 2rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .footer-brand .logo-mark {
+      width: 32px;
+      height: 32px;
+      font-size: 1rem;
+    }
+    
+    .footer-tagline {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+    
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover { color: var(--accent-teal); }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .pillars-grid {
+        grid-template-columns: 1fr;
+        max-width: 700px;
+      }
+      
+      .network-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .convergence-visual {
+        flex-direction: column;
+      }
+      
+      .convergence-bridge {
+        transform: rotate(90deg);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      
+      section { padding: 5rem 1.5rem; }
+      
+      .network-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+      
+      .timeline::before { left: 20px; }
+      .timeline-item { flex-direction: column !important; padding-left: 50px; }
+      .timeline-marker { left: 20px !important; }
+      .timeline-content { text-align: left !important; }
+      
+      .footer-content {
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+      }
+    }
+    
+    /* Animations on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s var(--ease-out-expo);
+    }
+    
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+  </style>
+</head>
+<body>
+  
+  <!-- Navigation -->
+  <nav id="navbar">
+    <a href="#" class="logo">
+      <div class="logo-mark">4E</div>
+      <span>Ecosystem</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#pillars">The Vision</a></li>
+      <li><a href="#convergence">Convergence</a></li>
+      <li><a href="#network">Network</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+    </ul>
+  </nav>
+  
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span>Enhancing Reality ✦ Amplifying Results</span>
+      </div>
+      <h1>
+        Two Dimensions.<br>
+        <span class="gradient-text">One Unified Future.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Where intelligent ecosystems meet spatial computing — empowering creators, connecting industries, and reshaping how humans and AI collaborate.
+      </p>
+      <div class="hero-cta">
+        <a href="#pillars" class="btn btn-primary">Explore the Vision</a>
+        <a href="#convergence" class="btn btn-secondary">See Convergence</a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="mouse"></div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+  
+  <!-- Dual Pillars -->
+  <section class="pillars" id="pillars">
+    <div class="section-header reveal">
+      <span class="section-label">The Dual Approach</span>
+      <h2 class="section-title">Two Pillars. Infinite Possibilities.</h2>
+      <p class="section-desc">
+        Our vision operates on two interconnected dimensions — each powerful alone, 
+        but transformative together.
+      </p>
+    </div>
+    
+    <div class="pillars-grid">
+      <!-- Ecosystem Pillar -->
+      <div class="pillar-card ecosystem reveal reveal-delay-1">
+        <div class="pillar-number">01</div>
+        <div class="pillar-icon">🌐</div>
+        <h3 class="pillar-title">Ecosystem Intelligence</h3>
+        <p class="pillar-tagline">The Connected Workflow Platform</p>
+        <p class="pillar-desc">
+          A unified environment for managing day-to-day operations end-to-end, with AI assistants 
+          that don't just help — they learn, adapt, and empower users to automate workflows 
+          and amplify their capabilities.
+        </p>
+        <ul class="pillar-features">
+          <li>
+            <div class="feature-icon">🤖</div>
+            <div class="feature-content">
+              <h4>AI-Augmented Workflows</h4>
+              <p>Intelligent agents that build, implement, and optimize your processes</p>
+            </div>
+          </li>
+          <li>
+            <div class="feature-icon">🔗</div>
+            <div class="feature-content">
+              <h4>Cross-Sector Discovery</h4>
+              <p>Connect academia, industry, manufacturing, and creative sectors</p>
+            </div>
+          </li>
+          <li>
+            <div class="feature-icon">💬</div>
+            <div class="feature-content">
+              <h4>Peer-to-Peer Network</h4>
+              <p>Real-time collaboration and knowledge exchange across disciplines</p>
+            </div>
+          </li>
+          <li>
+            <div class="feature-icon">⚡</div>
+            <div class="feature-content">
+              <h4>Adaptive Automation</h4>
+              <p>Tools that evolve with your workflow and empower deeper capabilities</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Spatial Pillar -->
+      <div class="pillar-card spatial reveal reveal-delay-2">
+        <div class="pillar-number">02</div>
+        <div class="pillar-icon">🔮</div>
+        <h3 class="pillar-title">Spatial Computing</h3>
+        <p class="pillar-tagline">The Immersive Interface Layer</p>
+        <p class="pillar-desc">
+          AI assistants that see what you see, hear what you hear — extending the digital 
+          workspace into three-dimensional space, overlaid seamlessly on the physical world 
+          through AR glasses and spatial devices.
+        </p>
+        <ul class="pillar-features">
+          <li>
+            <div class="feature-icon">👁️</div>
+            <div class="feature-content">
+              <h4>Multimodal Perception</h4>
+              <p>AI that understands visual and auditory context in real-time</p>
+            </div>
+          </li>
+          <li>
+            <div class="feature-icon">🌍</div>
+            <div class="feature-content">
+              <h4>World-Anchored Content</h4>
+              <p>Digital objects and data pinned to physical space</p>
+            </div>
+          </li>
+          <li>
+            <div class="feature-icon">🎨</div>
+            <div class="feature-content">
+              <h4>3D Creative Tools</h4>
+              <p>Design, sculpt, and prototype in the space around you</p>
+            </div>
+          </li>
+          <li>
+            <div class="feature-icon">📐</div>
+            <div class="feature-content">
+              <h4>Contextual Intelligence</h4>
+              <p>Assistants that understand your environment and adapt accordingly</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Convergence -->
+  <section class="convergence" id="convergence">
+    <div class="convergence-content">
+      <div class="section-header reveal">
+        <span class="section-label">The Ultimate Vision</span>
+        <h2 class="section-title">Where Both Worlds Converge</h2>
+        <p class="section-desc">
+          The future isn't about choosing between digital ecosystems and spatial interfaces — 
+          it's about their seamless integration, creating experiences that feel natural, 
+          powerful, and limitless.
+        </p>
+      </div>
+      
+      <div class="convergence-visual reveal">
+        <div class="convergence-node ecosystem-node">
+          <span>🌐</span>
+          <p>Ecosystem<br>Intelligence</p>
+        </div>
+        
+        <div class="convergence-bridge">
+          <div class="bridge-line"></div>
+        </div>
+        
+        <div class="convergence-center">
+          <span>✦</span>
+          <p>UNIFIED<br>EXPERIENCE</p>
+        </div>
+        
+        <div class="convergence-bridge">
+          <div class="bridge-line"></div>
+        </div>
+        
+        <div class="convergence-node spatial-node">
+          <span>🔮</span>
+          <p>Spatial<br>Computing</p>
+        </div>
+      </div>
+      
+      <div class="vision-statement reveal">
+        <blockquote>
+          "Imagine managing your projects while AR glasses display real-time data 
+          anchored to physical prototypes. AI assistants that see your workspace, 
+          understand context, and orchestrate workflows — all within a connected 
+          network spanning industries, academia, and creative disciplines."
+        </blockquote>
+        <cite>— The 4E Vision for Human-AI Collaboration</cite>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Network Section -->
+  <section class="network" id="network">
+    <div class="section-header reveal">
+      <span class="section-label">Connected Sectors</span>
+      <h2 class="section-title">Bridging Disciplines</h2>
+      <p class="section-desc">
+        A discovery network that connects people, knowledge, and opportunities 
+        across traditionally siloed sectors.
+      </p>
+    </div>
+    
+    <div class="network-grid">
+      <div class="network-card reveal reveal-delay-1">
+        <span>🎓</span>
+        <h4>Academia</h4>
+        <p>Research institutions & educational programs</p>
+      </div>
+      <div class="network-card reveal reveal-delay-2">
+        <span>🏭</span>
+        <h4>Industry</h4>
+        <p>Enterprise solutions & professional services</p>
+      </div>
+      <div class="network-card reveal reveal-delay-3">
+        <span>⚙️</span>
+        <h4>Manufacturing</h4>
+        <p>Production workflows & supply chain</p>
+      </div>
+      <div class="network-card reveal reveal-delay-4">
+        <span>🎨</span>
+        <h4>Creative</h4>
+        <p>Artists, designers & content creators</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Roadmap -->
+  <section class="roadmap" id="roadmap">
+    <div class="section-header reveal">
+      <span class="section-label">Strategic Trajectory</span>
+      <h2 class="section-title">Building Toward Convergence</h2>
+      <p class="section-desc">
+        A phased approach designed for sustainable growth and technological adaptability.
+      </p>
+    </div>
+    
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="timeline-phase">Phase 01 — Foundation</div>
+          <h3 class="timeline-title">Ecosystem Core</h3>
+          <p class="timeline-desc">
+            Launch PM Hub, AI agent framework, and initial Blender integrations. 
+            Establish education partnerships and build the discovery network foundation.
+          </p>
+        </div>
+        <div style="flex: 1;"></div>
+      </div>
+      
+      <div class="timeline-item reveal">
+        <div class="timeline-marker"></div>
+        <div style="flex: 1;"></div>
+        <div class="timeline-content">
+          <div class="timeline-phase">Phase 02 — Expansion</div>
+          <h3 class="timeline-title">Spatial Layer</h3>
+          <p class="timeline-desc">
+            Deploy 4E AR Engine for web and device experiences. Integrate multimodal 
+            AI perception and launch cross-platform spatial tools.
+          </p>
+        </div>
+      </div>
+      
+      <div class="timeline-item reveal">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <div class="timeline-phase">Phase 03 — Convergence</div>
+          <h3 class="timeline-title">Unified Platform</h3>
+          <p class="timeline-desc">
+            Merge ecosystem intelligence with spatial computing. Full AR glasses 
+            integration, ambient AI assistants, and enterprise-scale deployment.
+          </p>
+        </div>
+        <div style="flex: 1;"></div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-content reveal">
+      <h2 class="cta-title">Ready to Shape the Future?</h2>
+      <p class="cta-desc">
+        Join us in building the next generation of connected, intelligent, 
+        and immersive experiences.
+      </p>
+      <div class="hero-cta">
+        <a href="#" class="btn btn-primary">Get Early Access</a>
+        <a href="#" class="btn btn-secondary">Partner With Us</a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="logo-mark">4E</div>
+        <div>
+          <strong>4E Virtual Design</strong>
+          <p class="footer-tagline">Enhancing Reality ✦ Amplifying Results</p>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    
+    // Reveal on scroll
+    const revealElements = document.querySelectorAll('.reveal');
+    
+    const revealOnScroll = () => {
+      const windowHeight = window.innerHeight;
+      revealElements.forEach(el => {
+        const elementTop = el.getBoundingClientRect().top;
+        const revealPoint = 150;
+        
+        if (elementTop < windowHeight - revealPoint) {
+          el.classList.add('visible');
+        }
+      });
+    };
+    
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
