@@ -272,22 +272,17 @@
     
     /* Team Section */
     .team { background: var(--bg-deep); }
-    .team-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-    .team-profile { padding: 2.25rem; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 20px; }
-    .profile-header { display: flex; gap: 1.25rem; margin-bottom: 1.5rem; }
-    .profile-avatar { width: 72px; height: 72px; border-radius: 18px; background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .profile-avatar .icon { color: var(--bg-deep); width: 32px; height: 32px; }
-    .profile-info h3 { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.15rem; }
-    .profile-info p { font-size: 0.9rem; color: var(--accent-teal); }
-    .profile-bio { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem; }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .skill-tags span { padding: 0.4rem 0.8rem; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); border-radius: 6px; font-size: 0.8rem; color: var(--text-secondary); }
-    .team-connections { display: flex; flex-direction: column; gap: 1rem; }
-    .connection-card { padding: 1.5rem; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 14px; cursor: pointer; transition: all 0.3s ease; }
-    .connection-card:hover { border-color: var(--accent-purple); transform: translateX(4px); }
-    .connection-card h4 { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
-    .connection-card h4 .icon { width: 18px; height: 18px; color: var(--accent-purple); }
-    .connection-card p { font-size: 0.85rem; color: var(--text-secondary); }
+    .team-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .team-profile { padding: 2rem; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 20px; display: flex; flex-direction: column; }
+    .profile-header { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 1.25rem; }
+    .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-bottom: 1rem; }
+    .profile-avatar .icon { color: var(--bg-deep); width: 36px; height: 36px; }
+    .profile-info { text-align: center; }
+    .profile-info h3 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .profile-info p { font-size: 0.85rem; color: var(--accent-teal); font-weight: 500; }
+    .profile-bio { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.25rem; flex-grow: 1; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+    .skill-tags span { padding: 0.35rem 0.7rem; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); border-radius: 6px; font-size: 0.75rem; color: var(--text-secondary); }
     
     /* Roadmap Section */
     .roadmap { background: var(--bg-surface); }
@@ -405,7 +400,8 @@
     /* Responsive */
     @media (max-width: 1200px) { .section-nav { right: 0.75rem; } }
     @media (max-width: 1024px) {
-      .pillars-grid, .team-layout { grid-template-columns: 1fr; max-width: 600px; margin-left: auto; margin-right: auto; }
+      .pillars-grid { grid-template-columns: 1fr; max-width: 600px; margin-left: auto; margin-right: auto; }
+      .team-layout { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
       .pricing-grid, .moat-grid, .revenue-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
       .network-grid { grid-template-columns: repeat(2, 1fr); }
       .orbit-system { width: 340px; height: 340px; }
@@ -798,15 +794,26 @@
         <div class="team-profile reveal">
           <div class="profile-header">
             <div class="profile-avatar"><svg class="icon"><use href="#icon-user"/></svg></div>
-            <div class="profile-info"><h3>Seán</h3><p>Founder & Lead Developer</p></div>
+            <div class="profile-info"><h3>Seán Burns</h3><p>Founder & Creative Director</p></div>
           </div>
-          <p class="profile-bio">15+ years in education across primary, secondary, and tertiary levels. Currently teaching Visual Arts, Performing Arts, and 3D Modelling at CCIS. Expert in AR/VR workflows, creative technologies, and building tools that empower users.</p>
-          <div class="skill-tags"><span>AR/VR Development</span><span>Three.js & React</span><span>Firebase Architecture</span><span>Curriculum Design</span><span>Python & TypeScript</span></div>
+          <p class="profile-bio">Creative technologist with 20 years bridging immersive media, education and industry. Delivered XR projects for universities, Screen Ireland, and enterprise clients. Trusted advisor on national panels for immersive learning.</p>
+          <div class="skill-tags"><span>XR Development</span><span>3D & Motion Capture</span><span>EdTech Strategy</span><span>Creative Direction</span></div>
         </div>
-        <div class="team-connections reveal reveal-delay-1">
-          <div class="connection-card" data-modal="network-education"><h4><svg class="icon"><use href="#icon-graduation"/></svg>Education Network</h4><p>Direct connections to CCIS, Culture Works, and Creative Technologies Skillnet.</p></div>
-          <div class="connection-card" data-modal="network-technical"><h4><svg class="icon"><use href="#icon-tools"/></svg>Technical Community</h4><p>Active contributor to open-source projects and creative tools ecosystem.</p></div>
-          <div class="connection-card" data-modal="network-growth"><h4><svg class="icon"><use href="#icon-lightning"/></svg>Growth Mode</h4><p>Seeking technical co-founder and advisors with EdTech or XR experience.</p></div>
+        <div class="team-profile reveal reveal-delay-1">
+          <div class="profile-header">
+            <div class="profile-avatar"><svg class="icon"><use href="#icon-user"/></svg></div>
+            <div class="profile-info"><h3>Brian King</h3><p>Operations & Strategy</p></div>
+          </div>
+          <p class="profile-bio">17+ years managing complex construction projects across Manhattan, from residential to multimillion-dollar commercial builds. Expert at identifying inefficiencies and building scalable systems under pressure.</p>
+          <div class="skill-tags"><span>Project Management</span><span>Operations Scale</span><span>Systems Thinking</span><span>Industry Insight</span></div>
+        </div>
+        <div class="team-profile reveal reveal-delay-2">
+          <div class="profile-header">
+            <div class="profile-avatar"><svg class="icon"><use href="#icon-user"/></svg></div>
+            <div class="profile-info"><h3>Dr Mick Brougham</h3><p>Business Development</p></div>
+          </div>
+          <p class="profile-bio">Former Regional Director at Enterprise Ireland. PhD in Biotech with startup and MNC experience. Designed the New Frontiers programme supporting 140+ entrepreneurs annually. Champion of creative industries skills development.</p>
+          <div class="skill-tags"><span>Enterprise Strategy</span><span>Startup Ecosystems</span><span>Programme Design</span><span>Investment Readiness</span></div>
         </div>
       </div>
     </div>
