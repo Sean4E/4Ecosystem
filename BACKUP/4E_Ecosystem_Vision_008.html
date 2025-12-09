@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>4E Ecosystem — The Future of Connected Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #06060a;
+      --bg-surface: #0c0c12;
+      --bg-elevated: #14141c;
+      --bg-card: #1a1a24;
+      --bg-glass: rgba(20, 20, 28, 0.92);
+      --bg-glass-subtle: rgba(255, 255, 255, 0.03);
+      --bg-modal: rgba(6, 6, 10, 0.96);
+      --accent-teal: #00d4aa;
+      --accent-teal-dim: rgba(0, 212, 170, 0.1);
+      --accent-teal-medium: rgba(0, 212, 170, 0.2);
+      --accent-teal-glow: rgba(0, 212, 170, 0.4);
+      --accent-purple: #8a5cf6;
+      --accent-purple-dim: rgba(138, 92, 246, 0.1);
+      --accent-coral: #ff6b9d;
+      --accent-coral-dim: rgba(255, 107, 157, 0.1);
+      --accent-gold: #f5a623;
+      --accent-gold-dim: rgba(245, 166, 35, 0.1);
+      --text-primary: #f5f5fa;
+      --text-secondary: rgba(245, 245, 250, 0.7);
+      --text-muted: rgba(245, 245, 250, 0.4);
+      --text-faint: rgba(245, 245, 250, 0.2);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-medium: rgba(255, 255, 255, 0.12);
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --nav-height: 300px;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; scroll-padding-top: var(--nav-height); }
+    body { font-family: var(--font-body); background: var(--bg-deep); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    body.modal-open { overflow: hidden; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-surface); }
+    ::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+    
+    .icon { width: 24px; height: 24px; stroke: currentColor; stroke-width: 1.5; fill: none; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .icon-sm { width: 18px; height: 18px; }
+    .icon-lg { width: 32px; height: 32px; stroke-width: 1.25; }
+    .icon-xl { width: 40px; height: 40px; stroke-width: 1; }
+    
+    /* Nav Buttons */
+    .nav-fullscreen-btn { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); border-radius: 10px; color: var(--text-muted); cursor: pointer; transition: all 0.3s ease; }
+    .nav-fullscreen-btn:hover { border-color: var(--accent-teal); color: var(--accent-teal); background: var(--accent-teal-dim); }
+    .nav-fullscreen-btn .icon { width: 20px; height: 20px; }
+    .nav-fullscreen-btn .icon-exit { display: none; }
+    body.fullscreen-active .nav-fullscreen-btn .icon-enter { display: none; }
+    body.fullscreen-active .nav-fullscreen-btn .icon-exit { display: block; }
+    
+    /* Section Navigation */
+    .section-nav { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); z-index: 900; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; padding: 0.75rem 0.5rem; background: var(--bg-glass); border: 1px solid var(--border-subtle); border-radius: 28px; backdrop-filter: blur(20px); left: auto !important; }
+    .section-nav-item { position: relative; width: 40px; height: 40px; border-radius: 50%; background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s var(--ease-out-expo); }
+    .section-nav-item::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--text-faint); transition: all 0.3s var(--ease-out-expo); }
+    .section-nav-item:hover::before { background: var(--text-muted); transform: scale(1.2); }
+    .section-nav-item.active::before { width: 10px; height: 10px; background: var(--accent-teal); box-shadow: 0 0 16px var(--accent-teal-glow); }
+    .section-nav-tooltip { position: absolute; right: calc(100% + 14px); top: 50%; transform: translateY(-50%) translateX(8px); padding: 0.5rem 0.875rem; background: var(--bg-card); border: 1px solid var(--border-medium); border-radius: 8px; font-size: 0.8rem; font-weight: 500; color: var(--text-primary); white-space: nowrap; opacity: 0; visibility: hidden; pointer-events: none; transition: all 0.25s var(--ease-out-expo); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    .section-nav-tooltip::after { content: ''; position: absolute; right: -6px; top: 50%; transform: translateY(-50%) rotate(45deg); width: 10px; height: 10px; background: var(--bg-card); border-right: 1px solid var(--border-medium); border-top: 1px solid var(--border-medium); }
+    .section-nav-item:hover .section-nav-tooltip { opacity: 1; visibility: visible; transform: translateY(-50%) translateX(0); }
+    .section-nav-divider { width: 24px; height: 1px; background: var(--border-subtle); margin: 0.25rem 0; }
+    .nav-arrow { width: 36px; height: 32px; border-radius: 8px; background: transparent; border: 1px solid var(--border-subtle); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: all 0.3s var(--ease-out-expo); }
+    .nav-arrow:hover { border-color: var(--accent-teal); color: var(--accent-teal); background: var(--accent-teal-dim); }
+    .nav-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+    .nav-arrow .icon { width: 18px; height: 18px; }
+    
+    /* Top Navigation */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-height); padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; background: transparent; transition: all 0.4s var(--ease-out-expo); }
+    nav.scrolled { background: var(--bg-glass); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-subtle); }
+    .logo { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--text-primary); text-decoration: none; display: flex; align-items: center; gap: 0.65rem; }
+    .logo-mark { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; color: var(--bg-deep); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.3s ease; }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-contact { display: flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.25rem; background: transparent; border: 1px solid var(--accent-teal); border-radius: 10px; color: var(--accent-teal); text-decoration: none; font-size: 0.875rem; font-weight: 600; transition: all 0.3s ease; }
+    .nav-contact:hover { background: var(--accent-teal); color: var(--bg-deep); }
+    .nav-contact .icon { width: 18px; height: 18px; }
+    .nav-right { display: flex; align-items: center; gap: 0.5rem; }
+    .nav-sources-btn { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); border-radius: 10px; color: var(--text-muted); cursor: pointer; transition: all 0.3s ease; }
+    .nav-sources-btn:hover { border-color: var(--accent-teal); color: var(--accent-teal); background: var(--accent-teal-dim); }
+    .nav-sources-btn .icon { width: 20px; height: 20px; }
+    .mobile-menu-btn { display: none; background: none; border: none; color: var(--text-primary); cursor: pointer; padding: 0.5rem; }
+    
+    /* Sections */
+    section { min-height: 100vh; min-height: 100dvh; padding: calc(var(--nav-height) + 3rem) 2rem 4rem; display: flex; flex-direction: column; justify-content: center; position: relative; }
+    .container { max-width: 1200px; width: 100%; margin: 0 auto; }
+    .section-header { text-align: center; max-width: 680px; margin: 0 auto 3.5rem; }
+    .section-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); border-radius: 100px; font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent-teal); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.25rem; }
+    .section-badge .icon { width: 14px; height: 14px; }
+    .section-number { color: var(--text-faint); font-weight: 600; }
+    .section-title { font-family: var(--font-display); font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 1rem; }
+    .section-desc { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; }
+    
+    /* Hero */
+    .hero { padding-top: 0; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+    .hero-bg::before { content: ''; position: absolute; top: -40%; left: 50%; transform: translateX(-50%); width: 140%; height: 100%; background: radial-gradient(ellipse at center, var(--accent-teal-dim) 0%, transparent 60%); opacity: 0.8; animation: heroPulse 12s ease-in-out infinite; }
+    .hero-bg::after { content: ''; position: absolute; bottom: -20%; right: -15%; width: 50%; height: 50%; background: radial-gradient(ellipse at center, var(--accent-purple-dim) 0%, transparent 60%); opacity: 0.6; }
+    @keyframes heroPulse { 0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); } 50% { opacity: 0.8; transform: translateX(-50%) scale(1.1); } }
+    .hero-content { position: relative; z-index: 1; text-align: center; max-width: 800px; margin: 0 auto; padding-top: calc(var(--nav-height) + 2rem); }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.6rem 1.25rem; background: var(--bg-glass); border: 1px solid var(--accent-teal-medium); border-radius: 100px; font-size: 0.85rem; color: var(--accent-teal); margin-bottom: 2rem; animation: fadeInUp 0.8s var(--ease-out-expo) both; }
+    .hero-badge .pulse { width: 8px; height: 8px; background: var(--accent-teal); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+    .hero h1 { font-family: var(--font-display); font-size: clamp(2.25rem, 6vw, 4rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.5rem; animation: fadeInUp 0.8s var(--ease-out-expo) 0.1s both; }
+    .hero h1 .gradient-text { background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 50%, var(--accent-coral) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-subtitle { font-size: clamp(1rem, 2vw, 1.15rem); color: var(--text-secondary); max-width: 560px; margin: 0 auto 2.5rem; line-height: 1.7; animation: fadeInUp 0.8s var(--ease-out-expo) 0.2s both; }
+    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeInUp 0.8s var(--ease-out-expo) 0.3s both; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.9rem 1.75rem; border-radius: 12px; font-family: var(--font-body); font-size: 0.95rem; font-weight: 600; text-decoration: none; cursor: pointer; transition: all 0.3s var(--ease-out-expo); border: none; }
+    .btn .icon { width: 18px; height: 18px; }
+    .btn-primary { background: linear-gradient(135deg, var(--accent-teal) 0%, #00b894 100%); color: var(--bg-deep); box-shadow: 0 4px 24px rgba(0, 212, 170, 0.25); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0, 212, 170, 0.35); }
+    .btn-secondary { background: var(--bg-elevated); border: 1px solid var(--border-medium); color: var(--text-primary); }
+    .btn-secondary:hover { border-color: var(--accent-teal); background: var(--accent-teal-dim); }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.75rem; animation: fadeInUp 0.8s var(--ease-out-expo) 0.5s both; }
+    .scroll-hint .mouse { width: 22px; height: 34px; border: 2px solid var(--text-muted); border-radius: 11px; position: relative; }
+    .scroll-hint .mouse::before { content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 3px; height: 6px; background: var(--accent-teal); border-radius: 2px; animation: scrollBounce 2s ease-in-out infinite; }
+    @keyframes scrollBounce { 0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; } 50% { transform: translateX(-50%) translateY(10px); opacity: 0.3; } }
+    
+    /* Cards */
+    .card { padding: 1.75rem; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 16px; transition: all 0.4s var(--ease-out-expo); cursor: pointer; position: relative; overflow: hidden; }
+    .card:hover { border-color: var(--border-medium); transform: translateY(-4px); }
+    .card-glow { position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, var(--glow-color, var(--accent-teal-dim)) 0%, transparent 60%); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; }
+    .card:hover .card-glow { opacity: 1; }
+    .click-indicator { position: absolute; bottom: 1rem; right: 1rem; display: flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; color: var(--text-faint); transition: all 0.3s ease; }
+    .click-indicator .icon { width: 14px; height: 14px; }
+    .card:hover .click-indicator { color: var(--accent-teal); }
+    
+    /* Problem Section */
+    .problem { background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-surface) 50%, var(--bg-deep) 100%); }
+    .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .problem-card { --glow-color: var(--accent-coral-dim); }
+    .problem-card:hover { border-color: rgba(255, 107, 157, 0.3); }
+    .problem-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--accent-coral-dim); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; position: relative; z-index: 1; }
+    .problem-icon .icon { color: var(--accent-coral); }
+    .problem-card h4 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; position: relative; z-index: 1; }
+    .problem-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.25rem; position: relative; z-index: 1; }
+    .problem-stat { padding-top: 1rem; border-top: 1px solid var(--border-subtle); display: flex; align-items: baseline; gap: 0.5rem; position: relative; z-index: 1; }
+    .problem-stat .number { font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; color: var(--accent-coral); }
+    .problem-stat .label { font-size: 0.8rem; color: var(--text-muted); }
+    
+    /* Pillars Section */
+    .pillars { background: var(--bg-deep); }
+    .pillars-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .pillar-card { padding: 2.25rem; border-radius: 20px; background: var(--bg-elevated); border: 1px solid var(--border-subtle); position: relative; overflow: hidden; transition: all 0.4s var(--ease-out-expo); }
+    .pillar-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--pillar-color); }
+    .pillar-card:hover { border-color: var(--pillar-color); transform: translateY(-4px); }
+    .pillar-card.ecosystem { --pillar-color: var(--accent-teal); --pillar-dim: var(--accent-teal-dim); }
+    .pillar-card.spatial { --pillar-color: var(--accent-purple); --pillar-dim: var(--accent-purple-dim); }
+    .pillar-header { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+    .pillar-icon { width: 56px; height: 56px; border-radius: 14px; background: var(--pillar-dim); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .pillar-icon .icon { color: var(--pillar-color); }
+    .pillar-meta { font-family: var(--font-mono); font-size: 0.65rem; color: var(--pillar-color); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem; }
+    .pillar-title { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.15rem; }
+    .pillar-tagline { font-size: 0.85rem; color: var(--pillar-color); font-weight: 500; }
+    .pillar-desc { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem; }
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .feature-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.9rem 1rem; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); border-radius: 10px; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; position: relative; }
+    .feature-item:hover { background: var(--pillar-dim); border-color: var(--pillar-color); padding-right: 2.5rem; }
+    .feature-item .icon { color: var(--pillar-color); width: 20px; height: 20px; }
+    .feature-item .expand { position: absolute; right: 0.75rem; opacity: 0; color: var(--pillar-color); width: 16px; height: 16px; transition: all 0.3s ease; }
+    .feature-item:hover .expand { opacity: 1; }
+    .pillar-visual { margin-top: 1.5rem; padding: 1.25rem; background: var(--bg-deep); border: 1px solid var(--border-subtle); border-radius: 12px; }
+    .flow-diagram { display: flex; align-items: center; justify-content: space-between; }
+    .flow-step { flex: 1; text-align: center; padding: 0.5rem; }
+    .flow-step .icon { color: var(--pillar-color); margin-bottom: 0.35rem; }
+    .flow-step span { display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .flow-arrow { color: var(--text-faint); flex-shrink: 0; }
+    .flow-arrow .icon { width: 16px; height: 16px; }
+    
+    /* Convergence Section */
+    .convergence { background: var(--bg-surface); position: relative; overflow: hidden; }
+    .convergence::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; background: conic-gradient(from 0deg, var(--accent-teal-dim), var(--accent-purple-dim), var(--accent-coral-dim), var(--accent-teal-dim)); border-radius: 50%; opacity: 0.15; filter: blur(80px); animation: rotateGlow 60s linear infinite; }
+    @keyframes rotateGlow { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+    .convergence-content { position: relative; z-index: 1; }
+    .orbit-container { display: flex; justify-content: center; padding: 2rem 0; }
+    .orbit-system { width: 400px; height: 400px; position: relative; }
+    .orbit-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; border: 1px dashed var(--border-subtle); }
+    .orbit-ring-1 { width: 240px; height: 240px; }
+    .orbit-ring-2 { width: 320px; height: 320px; }
+    .orbit-ring-3 { width: 400px; height: 400px; border-style: solid; border-color: var(--border-medium); }
+    .center-hub { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: 0 0 40px var(--accent-teal-glow), 0 0 80px rgba(138, 92, 246, 0.2); cursor: pointer; transition: all 0.4s var(--ease-out-expo); z-index: 5; }
+    .center-hub:hover { transform: translate(-50%, -50%) scale(1.1); }
+    .center-hub .icon { color: var(--bg-deep); width: 32px; height: 32px; margin-bottom: 0.25rem; }
+    .center-hub span { font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; color: var(--bg-deep); text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.2; }
+    .orbit-node { position: absolute; width: 72px; height: 72px; border-radius: 50%; background: var(--bg-elevated); border: 2px solid var(--node-color); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: 0 0 24px var(--node-glow); cursor: pointer; transition: all 0.4s var(--ease-out-expo); z-index: 3; }
+    .orbit-node:hover { transform: scale(1.15); }
+    .orbit-node .icon { color: var(--node-color); width: 22px; height: 22px; margin-bottom: 0.15rem; }
+    .orbit-node span { font-size: 0.55rem; font-weight: 600; color: var(--node-color); text-transform: uppercase; letter-spacing: 0.02em; }
+    .orbit-node.node-ecosystem { --node-color: var(--accent-teal); --node-glow: var(--accent-teal-dim); top: 0; left: 50%; transform: translateX(-50%); }
+    .orbit-node.node-ecosystem:hover { transform: translateX(-50%) scale(1.15); }
+    .orbit-node.node-spatial { --node-color: var(--accent-purple); --node-glow: var(--accent-purple-dim); bottom: 0; left: 50%; transform: translateX(-50%); }
+    .orbit-node.node-spatial:hover { transform: translateX(-50%) scale(1.15); }
+    .orbit-node.node-ai { --node-color: var(--accent-coral); --node-glow: var(--accent-coral-dim); top: 50%; right: 0; transform: translateY(-50%); }
+    .orbit-node.node-ai:hover { transform: translateY(-50%) scale(1.15); }
+    .orbit-node.node-network { --node-color: var(--accent-gold); --node-glow: var(--accent-gold-dim); top: 50%; left: 0; transform: translateY(-50%); }
+    .orbit-node.node-network:hover { transform: translateY(-50%) scale(1.15); }
+    .connection-line { position: absolute; top: 50%; left: 50%; height: 1px; background: linear-gradient(90deg, var(--accent-teal) 0%, transparent 100%); transform-origin: left center; opacity: 0.2; z-index: 1; width: 120px; }
+    .connection-line-1 { transform: translateY(-50%) rotate(0deg); }
+    .connection-line-2 { transform: translateY(-50%) rotate(90deg); }
+    .connection-line-3 { transform: translateY(-50%) rotate(180deg); }
+    .connection-line-4 { transform: translateY(-50%) rotate(270deg); }
+    .vision-quote { max-width: 720px; margin: 2rem auto 0; padding: 2rem; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 16px; text-align: center; }
+    .vision-quote blockquote { font-family: var(--font-display); font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 500; line-height: 1.7; color: var(--text-primary); font-style: italic; }
+    .vision-quote cite { display: block; margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); font-style: normal; }
+    
+    /* Business Section */
+    .business { background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-deep) 100%); }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+    .pricing-card { padding: 2rem; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 16px; text-align: center; cursor: pointer; transition: all 0.4s var(--ease-out-expo); position: relative; }
+    .pricing-card:hover { transform: translateY(-4px); border-color: var(--border-medium); }
+    .pricing-card.featured { border-color: var(--accent-teal); background: linear-gradient(180deg, var(--accent-teal-dim) 0%, var(--bg-elevated) 100%); }
+    .pricing-card.featured::before { content: 'Most Popular'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); padding: 0.3rem 0.75rem; background: var(--accent-teal); color: var(--bg-deep); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 4px; }
+    .pricing-tier { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .pricing-card.featured .pricing-tier { color: var(--accent-teal); }
+    .pricing-price { font-family: var(--font-display); font-size: 2.75rem; font-weight: 700; line-height: 1; margin-bottom: 0.25rem; }
+    .pricing-period { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .pricing-features { list-style: none; text-align: left; }
+    .pricing-features li { display: flex; align-items: center; gap: 0.6rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.875rem; color: var(--text-secondary); }
+    .pricing-features li:last-child { border-bottom: none; }
+    .pricing-features .icon { width: 16px; height: 16px; color: var(--accent-teal); }
+    .revenue-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .revenue-card { padding: 1.5rem; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); border-radius: 12px; text-align: center; cursor: pointer; transition: all 0.3s ease; }
+    .revenue-card:hover { border-color: var(--accent-purple); background: var(--accent-purple-dim); }
+    .revenue-card .icon-wrap { width: 44px; height: 44px; border-radius: 12px; background: var(--accent-purple-dim); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.875rem; }
+    .revenue-card .icon { color: var(--accent-purple); }
+    .revenue-card h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .revenue-card p { font-size: 0.8rem; color: var(--text-muted); }
+    
+    /* Network Section */
+    .network { background: var(--bg-deep); }
+    .network-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+    .network-card { padding: 1.75rem; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 14px; text-align: center; cursor: pointer; transition: all 0.4s var(--ease-out-expo); position: relative; overflow: hidden; }
+    .network-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, var(--accent-teal-dim) 0%, transparent 70%); opacity: 0; transition: opacity 0.4s ease; }
+    .network-card:hover::before { opacity: 1; }
+    .network-card:hover { border-color: var(--accent-teal); transform: translateY(-4px); }
+    .network-card .icon-wrap { width: 52px; height: 52px; border-radius: 14px; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; position: relative; z-index: 1; transition: all 0.3s ease; }
+    .network-card:hover .icon-wrap { background: var(--accent-teal-dim); border-color: var(--accent-teal); }
+    .network-card .icon { color: var(--text-secondary); transition: color 0.3s ease; }
+    .network-card:hover .icon { color: var(--accent-teal); }
+    .network-card h4 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; margin-bottom: 0.35rem; position: relative; z-index: 1; }
+    .network-card p { font-size: 0.8rem; color: var(--text-muted); position: relative; z-index: 1; }
+    
+    /* Competitive Section */
+    .competitive { background: var(--bg-surface); }
+    .table-container { overflow-x: auto; border-radius: 16px; border: 1px solid var(--border-subtle); background: var(--bg-elevated); }
+    .comparison-table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    .comparison-table th, .comparison-table td { padding: 1rem 1.25rem; text-align: left; border-bottom: 1px solid var(--border-subtle); }
+    .comparison-table th { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; background: var(--bg-card); }
+    .comparison-table td { font-size: 0.9rem; }
+    .comparison-table tbody tr:last-child td { border-bottom: none; }
+    .comparison-table tr.highlight { background: var(--accent-teal-dim); }
+    .comparison-table tr.highlight td { color: var(--accent-teal); font-weight: 600; }
+    .icon-check { color: var(--accent-teal); }
+    .icon-cross { color: var(--accent-coral); opacity: 0.5; }
+    .moat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
+    .moat-card { padding: 1.5rem; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; }
+    .moat-card:hover { border-color: var(--accent-teal); transform: translateY(-2px); }
+    .moat-card h4 { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .moat-card h4 .icon { width: 18px; height: 18px; color: var(--accent-teal); }
+    .moat-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+    
+    /* Team Section */
+    .team { background: var(--bg-deep); }
+    .team-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .team-profile { padding: 2rem; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 20px; display: flex; flex-direction: column; }
+    .profile-header { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 1.25rem; }
+    .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-teal) 0%, var(--accent-purple) 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-bottom: 1rem; }
+    .profile-avatar .icon { color: var(--bg-deep); width: 36px; height: 36px; }
+    .profile-info { text-align: center; }
+    .profile-info h3 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .profile-info p { font-size: 0.85rem; color: var(--accent-teal); font-weight: 500; }
+    .profile-bio { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.25rem; flex-grow: 1; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+    .skill-tags span { padding: 0.35rem 0.7rem; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); border-radius: 6px; font-size: 0.75rem; color: var(--text-secondary); }
+    
+    /* Roadmap Section */
+    .roadmap { background: var(--bg-surface); }
+    .timeline { max-width: 900px; margin: 0 auto; position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--accent-teal) 0%, var(--accent-purple) 50%, var(--accent-coral) 100%); transform: translateX(-50%); }
+    .timeline-item { display: flex; gap: 3rem; margin-bottom: 2.5rem; position: relative; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-item:nth-child(even) { flex-direction: row-reverse; }
+    .timeline-content { flex: 1; padding: 1.75rem; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 14px; cursor: pointer; transition: all 0.3s ease; }
+    .timeline-content:hover { border-color: var(--phase-color, var(--accent-teal)); transform: translateY(-2px); }
+    .timeline-item:nth-child(odd) .timeline-content { text-align: right; }
+    .timeline-marker { position: absolute; left: 50%; top: 1.75rem; transform: translateX(-50%); width: 16px; height: 16px; border-radius: 50%; background: var(--bg-surface); border: 3px solid var(--phase-color, var(--accent-teal)); z-index: 1; cursor: pointer; transition: transform 0.3s ease; }
+    .timeline-marker:hover { transform: translateX(-50%) scale(1.3); }
+    .timeline-item:nth-child(1) { --phase-color: var(--accent-teal); }
+    .timeline-item:nth-child(2) { --phase-color: var(--accent-purple); }
+    .timeline-item:nth-child(3) { --phase-color: var(--accent-coral); }
+    .timeline-phase { font-family: var(--font-mono); font-size: 0.7rem; color: var(--phase-color, var(--accent-teal)); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.35rem; }
+    .timeline-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .timeline-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+    .timeline-spacer { flex: 1; }
+    
+    /* CTA Section */
+    .cta-section { background: var(--bg-deep); position: relative; }
+    .cta-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent 0%, var(--accent-teal) 50%, transparent 100%); }
+    .cta-content { text-align: center; max-width: 600px; margin: 0 auto; }
+    .cta-title { font-family: var(--font-display); font-size: clamp(1.75rem, 3.5vw, 2.25rem); font-weight: 700; margin-bottom: 1rem; }
+    .cta-desc { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 2.5rem; line-height: 1.7; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+    .cta-email { display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.9rem; }
+    .cta-email .icon { width: 18px; height: 18px; }
+    .cta-email a { color: var(--accent-teal); text-decoration: none; transition: color 0.3s ease; }
+    .cta-email a:hover { color: var(--text-primary); }
+    
+    /* Footer */
+    footer { background: var(--bg-deep); padding: 2.5rem 2rem; border-top: 1px solid var(--border-subtle); }
+    .footer-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+    .footer-brand { display: flex; align-items: center; gap: 0.75rem; }
+    .footer-brand .logo-mark { width: 32px; height: 32px; font-size: 0.75rem; }
+    .footer-info { font-size: 0.85rem; }
+    .footer-info strong { display: block; margin-bottom: 0.1rem; }
+    .footer-tagline { color: var(--text-muted); font-size: 0.8rem; }
+    .footer-contact { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); font-size: 0.85rem; }
+    .footer-contact .icon { width: 16px; height: 16px; color: var(--accent-teal); }
+    .footer-contact a { color: var(--accent-teal); text-decoration: none; }
+    .footer-contact a:hover { text-decoration: underline; }
+    
+    /* Modal */
+    .modal-overlay { position: fixed; inset: 0; background: var(--bg-modal); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; visibility: hidden; transition: all 0.4s var(--ease-out-expo); }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal { background: var(--bg-elevated); border: 1px solid var(--border-medium); border-radius: 20px; max-width: 640px; width: 100%; max-height: 85vh; overflow-y: auto; transform: translateY(20px) scale(0.96); transition: all 0.4s var(--ease-out-expo); }
+    .modal-overlay.active .modal { transform: translateY(0) scale(1); }
+    .modal-header { padding: 1.75rem 1.75rem 1.25rem; display: flex; align-items: flex-start; gap: 1rem; border-bottom: 1px solid var(--border-subtle); }
+    .modal-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .modal-icon.teal { background: var(--accent-teal-dim); }
+    .modal-icon.teal .icon { color: var(--accent-teal); }
+    .modal-icon.purple { background: var(--accent-purple-dim); }
+    .modal-icon.purple .icon { color: var(--accent-purple); }
+    .modal-icon.coral { background: var(--accent-coral-dim); }
+    .modal-icon.coral .icon { color: var(--accent-coral); }
+    .modal-icon.gold { background: var(--accent-gold-dim); }
+    .modal-icon.gold .icon { color: var(--accent-gold); }
+    .modal-title-wrap { flex: 1; }
+    .modal-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.25rem; }
+    .modal-title { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; }
+    .modal-close { width: 40px; height: 40px; border-radius: 10px; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; flex-shrink: 0; }
+    .modal-close:hover { border-color: var(--accent-coral); color: var(--accent-coral); background: var(--accent-coral-dim); }
+    .modal-body { padding: 1.5rem 1.75rem 1.75rem; }
+    .modal-body p { color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.7; }
+    .modal-body h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-primary); }
+    .modal-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .modal-list li { display: flex; align-items: flex-start; gap: 0.75rem; padding: 1rem; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); border-radius: 10px; }
+    .modal-list li .icon { color: var(--accent-teal); width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; }
+    .modal-list li strong { display: block; margin-bottom: 0.2rem; color: var(--text-primary); }
+    .modal-list li span { font-size: 0.85rem; color: var(--text-muted); }
+    .modal-metric { padding: 1.25rem; background: var(--bg-deep); border: 1px solid var(--border-subtle); border-radius: 12px; text-align: center; }
+    .modal-metric-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .modal-metric-value { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--accent-teal); }
+    .modal-metric-sub { font-size: 0.85rem; color: var(--text-muted); }
+    
+    /* Sources Drawer */
+    .sources-drawer { position: fixed; top: 0; right: -420px; width: 400px; max-width: 90vw; height: 100vh; background: var(--bg-elevated); border-left: 1px solid var(--border-medium); z-index: 2100; transition: right 0.4s var(--ease-out-expo); overflow-y: auto; }
+    .sources-drawer.active { right: 0; }
+    .sources-drawer-header { padding: 1.5rem; border-bottom: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: var(--bg-elevated); z-index: 1; }
+    .sources-drawer-header h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; }
+    .sources-drawer-close { width: 36px; height: 36px; border-radius: 8px; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+    .sources-drawer-close:hover { border-color: var(--accent-coral); color: var(--accent-coral); }
+    .sources-drawer-body { padding: 1.5rem; }
+    .source-category { margin-bottom: 2rem; }
+    .source-category h4 { font-family: var(--font-display); font-size: 0.95rem; font-weight: 600; color: var(--accent-teal); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .source-category h4 .icon { width: 18px; height: 18px; }
+    .source-item { padding: 1rem; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); border-radius: 10px; margin-bottom: 0.75rem; }
+    .source-item .metric { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--accent-coral); margin-bottom: 0.25rem; }
+    .source-item .claim { font-size: 0.9rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+    .source-item .citation { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+    .source-item .citation a { color: var(--accent-teal); text-decoration: none; }
+    .source-item .citation a:hover { text-decoration: underline; }
+    .source-note { padding: 1rem; background: var(--accent-teal-dim); border: 1px solid var(--accent-teal-medium); border-radius: 10px; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+    .source-note strong { color: var(--accent-teal); }
+    .sources-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2050; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+    .sources-overlay.active { opacity: 1; visibility: visible; }
+    
+    /* Mobile Menu */
+    .mobile-menu { position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; background: var(--bg-elevated); border-left: 1px solid var(--border-medium); z-index: 1500; transition: right 0.4s var(--ease-out-expo); padding: 5rem 1.5rem 2rem; }
+    .mobile-menu.active { right: 0; }
+    .mobile-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1400; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+    .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
+    .mobile-menu-links { list-style: none; margin-bottom: 2rem; }
+    .mobile-menu-links li { border-bottom: 1px solid var(--border-subtle); }
+    .mobile-menu-links a { display: block; padding: 1rem 0; color: var(--text-secondary); text-decoration: none; font-size: 1rem; font-weight: 500; transition: color 0.3s ease; }
+    .mobile-menu-links a:hover { color: var(--accent-teal); }
+    .mobile-menu-btn-sources { display: flex; align-items: center; gap: 0.5rem; width: 100%; padding: 0.875rem 1rem; background: var(--bg-glass-subtle); border: 1px solid var(--border-subtle); border-radius: 10px; color: var(--text-secondary); font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; }
+    .mobile-menu-btn-sources:hover { border-color: var(--accent-teal); color: var(--accent-teal); }
+    .mobile-menu-btn-sources .icon { width: 18px; height: 18px; }
+    
+    /* Responsive */
+    @media (max-width: 1200px) { .section-nav { right: 0.75rem; } }
+    @media (max-width: 1024px) {
+      .pillars-grid { grid-template-columns: 1fr; max-width: 600px; margin-left: auto; margin-right: auto; }
+      .team-layout { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+      .pricing-grid, .moat-grid, .revenue-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+      .network-grid { grid-template-columns: repeat(2, 1fr); }
+      .orbit-system { width: 340px; height: 340px; }
+      .orbit-ring-1 { width: 200px; height: 200px; }
+      .orbit-ring-2 { width: 270px; height: 270px; }
+      .orbit-ring-3 { width: 340px; height: 340px; }
+      .center-hub { width: 100px; height: 100px; }
+      .center-hub .icon { width: 28px; height: 28px; }
+      .orbit-node { width: 64px; height: 64px; }
+      .connection-line { width: 100px; }
+    }
+    @media (max-width: 768px) {
+      :root { --nav-height: 64px; }
+      .section-nav { display: none; }
+      nav { padding: 0 1.25rem; }
+      .nav-links, .nav-contact, .nav-sources-btn { display: none; }
+      .mobile-menu-btn { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; }
+      section { padding: 4rem 1.25rem; min-height: auto; }
+      .hero { min-height: 100vh; min-height: 100dvh; }
+      .problem-grid, .network-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+      .timeline::before { left: 16px; }
+      .timeline-item { flex-direction: column !important; padding-left: 48px; gap: 0; }
+      .timeline-marker { left: 16px !important; top: 0; }
+      .timeline-content { text-align: left !important; }
+      .timeline-spacer { display: none; }
+      .orbit-system { width: 280px; height: 280px; }
+      .orbit-ring-1 { width: 160px; height: 160px; }
+      .orbit-ring-2 { width: 220px; height: 220px; }
+      .orbit-ring-3 { width: 280px; height: 280px; }
+      .center-hub { width: 85px; height: 85px; }
+      .center-hub .icon { width: 24px; height: 24px; }
+      .center-hub span { font-size: 0.55rem; }
+      .orbit-node { width: 54px; height: 54px; }
+      .orbit-node .icon { width: 18px; height: 18px; }
+      .orbit-node span { font-size: 0.45rem; }
+      .connection-line { width: 85px; }
+      .modal { margin: 1rem; max-height: 90vh; border-radius: 16px; }
+      .modal-header, .modal-body { padding: 1.25rem; }
+      .footer-content { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 2rem; }
+      .btn { width: 100%; justify-content: center; }
+      .hero-cta { flex-direction: column; width: 100%; max-width: 280px; margin-left: auto; margin-right: auto; }
+      .flow-diagram { flex-direction: column; gap: 0.5rem; }
+      .flow-arrow { transform: rotate(90deg); }
+      .orbit-system { width: 240px; height: 240px; }
+      .orbit-ring-1 { width: 140px; height: 140px; }
+      .orbit-ring-2 { width: 190px; height: 190px; }
+      .orbit-ring-3 { width: 240px; height: 240px; }
+      .center-hub { width: 70px; height: 70px; }
+      .center-hub .icon { width: 20px; height: 20px; }
+      .center-hub span { font-size: 0.5rem; }
+      .orbit-node { width: 46px; height: 46px; }
+      .orbit-node .icon { width: 16px; height: 16px; }
+      .orbit-node span { display: none; }
+      .connection-line { width: 70px; }
+    }
+    
+    /* Scroll Animations */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s var(--ease-out-expo); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+  </style>
+</head>
+<body>
+  <!-- SVG Icons -->
+  <svg style="display: none;">
+    <defs>
+      <symbol id="icon-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+      <symbol id="icon-glasses" viewBox="0 0 24 24"><path d="M2 8h20"/><rect x="2" y="10" width="7" height="5" rx="1.5"/><rect x="15" y="10" width="7" height="5" rx="1.5"/><path d="M9 12.5h6"/><path d="M2 10V8"/><path d="M22 10V8"/></symbol>
+      <symbol id="icon-brain" viewBox="0 0 24 24"><path d="M12 4.5a2.5 2.5 0 0 0-4.96-.46 2.5 2.5 0 0 0-1.98 3 2.5 2.5 0 0 0-1.32 4.24 3 3 0 0 0 .34 5.58 2.5 2.5 0 0 0 2.96 3.08A2.5 2.5 0 0 0 12 19.5"/><path d="M12 4.5a2.5 2.5 0 0 1 4.96-.46 2.5 2.5 0 0 1 1.98 3 2.5 2.5 0 0 1 1.32 4.24 3 3 0 0 1-.34 5.58 2.5 2.5 0 0 1-2.96 3.08A2.5 2.5 0 0 1 12 19.5"/><path d="M12 4.5v15"/></symbol>
+      <symbol id="icon-network" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v5"/><path d="M7.5 17.5l3.5-3.5"/><path d="M16.5 17.5l-3.5-3.5"/><circle cx="12" cy="12" r="1"/></symbol>
+      <symbol id="icon-tools" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+      <symbol id="icon-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+      <symbol id="icon-discover" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></symbol>
+      <symbol id="icon-eye" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="icon-cube" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+      <symbol id="icon-layers" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></symbol>
+      <symbol id="icon-lightning" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></symbol>
+      <symbol id="icon-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+      <symbol id="icon-graduation" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
+      <symbol id="icon-building" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01M8 14h.01M16 14h.01M12 14h.01"/></symbol>
+      <symbol id="icon-cog" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+      <symbol id="icon-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z"/></symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+      <symbol id="icon-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+      <symbol id="icon-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+      <symbol id="icon-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+      <symbol id="icon-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3z"/><path d="M19 15l.5 1.5L21 17l-1.5.5L19 19l-.5-1.5L17 17l1.5-.5L19 15z"/><path d="M5 3l.5 1.5L7 5l-1.5.5L5 7l-.5-1.5L3 5l1.5-.5L5 3z"/></symbol>
+      <symbol id="icon-arrow-right" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+      <symbol id="icon-arrow-up" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></symbol>
+      <symbol id="icon-arrow-down" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></symbol>
+      <symbol id="icon-menu" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
+      <symbol id="icon-broken" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/><path d="M14 4l-2 18"/></symbol>
+      <symbol id="icon-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+      <symbol id="icon-dollar" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+      <symbol id="icon-maximize" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
+      <symbol id="icon-minimize" viewBox="0 0 24 24"><path d="M4 14h6v6"/><path d="M20 10h-6V4"/><path d="M14 10l7-7"/><path d="M3 21l7-7"/></symbol>
+      <symbol id="icon-workflow" viewBox="0 0 24 24"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M6 9v3a3 3 0 0 0 3 3h2"/><path d="M18 9v3a3 3 0 0 1-3 3h-2"/></symbol>
+      <symbol id="icon-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
+      <symbol id="icon-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- Section Navigation -->
+  <nav class="section-nav" id="sectionNav">
+    <button class="section-nav-item active" data-section="hero"><span class="section-nav-tooltip">01 — Title</span></button>
+    <button class="section-nav-item" data-section="problem"><span class="section-nav-tooltip">02 — Problem</span></button>
+    <button class="section-nav-item" data-section="pillars"><span class="section-nav-tooltip">03 — Solution</span></button>
+    <button class="section-nav-item" data-section="convergence"><span class="section-nav-tooltip">04 — Vision</span></button>
+    <button class="section-nav-item" data-section="business"><span class="section-nav-tooltip">05 — Business</span></button>
+    <button class="section-nav-item" data-section="network"><span class="section-nav-tooltip">06 — Market</span></button>
+    <button class="section-nav-item" data-section="competitive"><span class="section-nav-tooltip">07 — Competition</span></button>
+    <button class="section-nav-item" data-section="team"><span class="section-nav-tooltip">08 — Team</span></button>
+    <button class="section-nav-item" data-section="roadmap"><span class="section-nav-tooltip">09 — Roadmap</span></button>
+    <button class="section-nav-item" data-section="cta"><span class="section-nav-tooltip">10 — Contact</span></button>
+    <div class="section-nav-divider"></div>
+    <button class="nav-arrow" id="navPrev" aria-label="Previous"><svg class="icon"><use href="#icon-arrow-up"/></svg></button>
+    <button class="nav-arrow" id="navNext" aria-label="Next"><svg class="icon"><use href="#icon-arrow-down"/></svg></button>
+  </nav>
+
+  <!-- Top Navigation -->
+  <nav id="navbar">
+    <a href="#hero" class="logo"><div class="logo-mark">4E</div><span>Ecosystem</span></a>
+    <ul class="nav-links">
+      <li><a href="#problem">Problem</a></li>
+      <li><a href="#pillars">Solution</a></li>
+      <li><a href="#convergence">Vision</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="mailto:sean@4e.ie" class="nav-contact"><svg class="icon"><use href="#icon-mail"/></svg>Contact</a>
+      <button class="nav-sources-btn" id="navSourcesBtn" title="View Sources & Research"><svg class="icon"><use href="#icon-book"/></svg></button>
+      <button class="nav-fullscreen-btn" id="fullscreenBtn" title="Toggle fullscreen (F11)"><svg class="icon icon-enter"><use href="#icon-maximize"/></svg><svg class="icon icon-exit"><use href="#icon-minimize"/></svg></button>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu"><svg class="icon"><use href="#icon-menu"/></svg></button>
+    </div>
+  </nav>
+
+  <!-- 01: Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><span class="pulse"></span>Enhancing Reality ✦ Amplifying Results</div>
+      <h1>Two Dimensions.<br><span class="gradient-text">One Unified Future.</span></h1>
+      <p class="hero-subtitle">Where intelligent ecosystems meet spatial computing — empowering creators, connecting industries, and redefining human-AI collaboration.</p>
+      <div class="hero-cta">
+        <a href="#pillars" class="btn btn-primary">Explore the Vision<svg class="icon"><use href="#icon-arrow-right"/></svg></a>
+        <a href="mailto:sean@4e.ie" class="btn btn-secondary"><svg class="icon"><use href="#icon-mail"/></svg>Get in Touch</a>
+      </div>
+    </div>
+    <div class="scroll-hint"><div class="mouse"></div><span>Scroll to explore</span></div>
+  </section>
+
+  <!-- 02: Problem -->
+  <section class="problem" id="problem">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge"><span class="section-number">02</span><svg class="icon"><use href="#icon-target"/></svg>Problem / Opportunity</div>
+        <h2 class="section-title">The Creative Workflow Crisis</h2>
+        <p class="section-desc">Creators and professionals face fragmented tools, prohibitive costs, and technical barriers that prevent them from reaching their full potential.</p>
+      </div>
+      <div class="problem-grid">
+        <div class="card problem-card reveal reveal-delay-1" data-modal="problem-fragmented">
+          <div class="card-glow"></div>
+          <div class="problem-icon"><svg class="icon icon-lg"><use href="#icon-broken"/></svg></div>
+          <h4>Fragmented Tools</h4>
+          <p>Professionals juggle disconnected apps, losing time and context switching between workflows.</p>
+          <div class="problem-stat"><span class="number">8-12</span><span class="label">apps per workflow</span></div>
+          <div class="click-indicator"><svg class="icon"><use href="#icon-plus"/></svg>Learn more</div>
+        </div>
+        <div class="card problem-card reveal reveal-delay-2" data-modal="problem-cost">
+          <div class="card-glow"></div>
+          <div class="problem-icon"><svg class="icon icon-lg"><use href="#icon-dollar"/></svg></div>
+          <h4>Prohibitive Costs</h4>
+          <p>Enterprise platforms cost thousands annually, locking out independents, educators, and small teams.</p>
+          <div class="problem-stat"><span class="number">€50K+</span><span class="label">annual platform cost</span></div>
+          <div class="click-indicator"><svg class="icon"><use href="#icon-plus"/></svg>Learn more</div>
+        </div>
+        <div class="card problem-card reveal reveal-delay-3" data-modal="problem-barriers">
+          <div class="card-glow"></div>
+          <div class="problem-icon"><svg class="icon icon-lg"><use href="#icon-lock"/></svg></div>
+          <h4>Technical Barriers</h4>
+          <p>Complex workflows require specialized skills most users lack—preventing adoption of powerful technologies.</p>
+          <div class="problem-stat"><span class="number">73%</span><span class="label">want AR but can't use it</span></div>
+          <div class="click-indicator"><svg class="icon"><use href="#icon-plus"/></svg>Learn more</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03: Pillars -->
+  <section class="pillars" id="pillars">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge"><span class="section-number">03</span><svg class="icon"><use href="#icon-sparkle"/></svg>Value Proposition</div>
+        <h2 class="section-title">Two Pillars. Infinite Possibilities.</h2>
+        <p class="section-desc">Our vision operates on two interconnected dimensions—each powerful alone, but transformative together.</p>
+      </div>
+      <div class="pillars-grid">
+        <div class="pillar-card ecosystem reveal reveal-delay-1">
+          <div class="pillar-header">
+            <div class="pillar-icon"><svg class="icon icon-xl"><use href="#icon-globe"/></svg></div>
+            <div><div class="pillar-meta">Dimension 01</div><h3 class="pillar-title">Ecosystem Intelligence</h3><p class="pillar-tagline">The Connected Workflow Platform</p></div>
+          </div>
+          <p class="pillar-desc">A unified environment for managing operations end-to-end, with AI assistants that learn, adapt, and empower users to automate workflows—and build their own tools.</p>
+          <ul class="feature-list">
+            <li class="feature-item" data-modal="feature-ai"><svg class="icon"><use href="#icon-brain"/></svg><span>AI-augmented workflows that build and optimize</span><svg class="icon expand"><use href="#icon-plus"/></svg></li>
+            <li class="feature-item" data-modal="feature-tools"><svg class="icon"><use href="#icon-tools"/></svg><span>Empower users to create custom tools</span><svg class="icon expand"><use href="#icon-plus"/></svg></li>
+            <li class="feature-item" data-modal="feature-discovery"><svg class="icon"><use href="#icon-discover"/></svg><span>Cross-sector discovery network</span><svg class="icon expand"><use href="#icon-plus"/></svg></li>
+            <li class="feature-item" data-modal="feature-network"><svg class="icon"><use href="#icon-users"/></svg><span>Peer-to-peer collaboration</span><svg class="icon expand"><use href="#icon-plus"/></svg></li>
+          </ul>
+          <div class="pillar-visual">
+            <div class="flow-diagram">
+              <div class="flow-step"><svg class="icon"><use href="#icon-user"/></svg><span>Need</span></div>
+              <div class="flow-arrow"><svg class="icon"><use href="#icon-arrow-right"/></svg></div>
+              <div class="flow-step"><svg class="icon"><use href="#icon-brain"/></svg><span>AI</span></div>
+              <div class="flow-arrow"><svg class="icon"><use href="#icon-arrow-right"/></svg></div>
+              <div class="flow-step"><svg class="icon"><use href="#icon-tools"/></svg><span>Build</span></div>
+              <div class="flow-arrow"><svg class="icon"><use href="#icon-arrow-right"/></svg></div>
+              <div class="flow-step"><svg class="icon"><use href="#icon-lightning"/></svg><span>Automate</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="pillar-card spatial reveal reveal-delay-2">
+          <div class="pillar-header">
+            <div class="pillar-icon"><svg class="icon icon-xl"><use href="#icon-glasses"/></svg></div>
+            <div><div class="pillar-meta">Dimension 02</div><h3 class="pillar-title">Spatial Computing</h3><p class="pillar-tagline">The Immersive Interface Layer</p></div>
+          </div>
+          <p class="pillar-desc">AI assistants that see what you see, hear what you hear—extending the digital workspace into three-dimensional space through AR glasses and spatial devices.</p>
+          <ul class="feature-list">
+            <li class="feature-item" data-modal="feature-multimodal"><svg class="icon"><use href="#icon-eye"/></svg><span>Multimodal perception—visual and audio context</span><svg class="icon expand"><use href="#icon-plus"/></svg></li>
+            <li class="feature-item" data-modal="feature-anchored"><svg class="icon"><use href="#icon-cube"/></svg><span>World-anchored content in physical space</span><svg class="icon expand"><use href="#icon-plus"/></svg></li>
+            <li class="feature-item" data-modal="feature-3d"><svg class="icon"><use href="#icon-layers"/></svg><span>3D creative tools—design around you</span><svg class="icon expand"><use href="#icon-plus"/></svg></li>
+            <li class="feature-item" data-modal="feature-context"><svg class="icon"><use href="#icon-brain"/></svg><span>Contextual intelligence adaptation</span><svg class="icon expand"><use href="#icon-plus"/></svg></li>
+          </ul>
+          <div class="pillar-visual">
+            <div class="flow-diagram">
+              <div class="flow-step"><svg class="icon"><use href="#icon-eye"/></svg><span>See</span></div>
+              <div class="flow-arrow"><svg class="icon"><use href="#icon-arrow-right"/></svg></div>
+              <div class="flow-step"><svg class="icon"><use href="#icon-brain"/></svg><span>Understand</span></div>
+              <div class="flow-arrow"><svg class="icon"><use href="#icon-arrow-right"/></svg></div>
+              <div class="flow-step"><svg class="icon"><use href="#icon-cube"/></svg><span>Overlay</span></div>
+              <div class="flow-arrow"><svg class="icon"><use href="#icon-arrow-right"/></svg></div>
+              <div class="flow-step"><svg class="icon"><use href="#icon-sparkle"/></svg><span>Enhance</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04: Convergence -->
+  <section class="convergence" id="convergence">
+    <div class="container convergence-content">
+      <div class="section-header reveal">
+        <div class="section-badge"><span class="section-number">04</span><svg class="icon"><use href="#icon-sparkle"/></svg>Underlying Magic</div>
+        <h2 class="section-title">Where Both Worlds Converge</h2>
+        <p class="section-desc">The future isn't about choosing between digital ecosystems and spatial interfaces—it's about their seamless integration.</p>
+      </div>
+      <div class="orbit-container reveal">
+        <div class="orbit-system">
+          <div class="orbit-ring orbit-ring-1"></div>
+          <div class="orbit-ring orbit-ring-2"></div>
+          <div class="orbit-ring orbit-ring-3"></div>
+          <div class="connection-line connection-line-1"></div>
+          <div class="connection-line connection-line-2"></div>
+          <div class="connection-line connection-line-3"></div>
+          <div class="connection-line connection-line-4"></div>
+          <div class="center-hub" data-modal="convergence-center"><svg class="icon"><use href="#icon-sparkle"/></svg><span>Unified<br>Experience</span></div>
+          <div class="orbit-node node-ecosystem" data-modal="convergence-ecosystem"><svg class="icon"><use href="#icon-globe"/></svg><span>Ecosystem</span></div>
+          <div class="orbit-node node-spatial" data-modal="convergence-spatial"><svg class="icon"><use href="#icon-glasses"/></svg><span>Spatial</span></div>
+          <div class="orbit-node node-ai" data-modal="convergence-ai"><svg class="icon"><use href="#icon-brain"/></svg><span>AI Agents</span></div>
+          <div class="orbit-node node-network" data-modal="convergence-network"><svg class="icon"><use href="#icon-network"/></svg><span>Network</span></div>
+        </div>
+      </div>
+      <div class="vision-quote reveal">
+        <blockquote>"Imagine managing your projects while AR glasses display real-time data anchored to physical prototypes. AI assistants that see your workspace, understand context, and orchestrate workflows—all within a connected network spanning industries, academia, and creative disciplines."</blockquote>
+        <cite>— The 4E Vision for Human-AI Collaboration</cite>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05: Business -->
+  <section class="business" id="business">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge"><span class="section-number">05</span><svg class="icon"><use href="#icon-dollar"/></svg>Business Model</div>
+        <h2 class="section-title">Sustainable Growth Model</h2>
+        <p class="section-desc">Multiple revenue streams designed for accessibility and scale.</p>
+      </div>
+      <div class="pricing-grid reveal">
+        <div class="pricing-card" data-modal="pricing-starter">
+          <div class="pricing-tier">Starter</div>
+          <div class="pricing-price">€0</div>
+          <div class="pricing-period">Forever free</div>
+          <ul class="pricing-features">
+            <li><svg class="icon"><use href="#icon-check"/></svg>Basic ecosystem access</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg>3 projects</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg>Community support</li>
+          </ul>
+        </div>
+        <div class="pricing-card featured" data-modal="pricing-pro">
+          <div class="pricing-tier">Professional</div>
+          <div class="pricing-price">€29</div>
+          <div class="pricing-period">per month</div>
+          <ul class="pricing-features">
+            <li><svg class="icon"><use href="#icon-check"/></svg>Full ecosystem + spatial</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg>AI agents & automation</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg>Custom tool builder</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg>Priority support</li>
+          </ul>
+        </div>
+        <div class="pricing-card" data-modal="pricing-enterprise">
+          <div class="pricing-tier">Enterprise</div>
+          <div class="pricing-price">€99</div>
+          <div class="pricing-period">per seat / month</div>
+          <ul class="pricing-features">
+            <li><svg class="icon"><use href="#icon-check"/></svg>White-label solutions</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg>Custom integrations</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg>SSO & admin controls</li>
+            <li><svg class="icon"><use href="#icon-check"/></svg>Dedicated success manager</li>
+          </ul>
+        </div>
+      </div>
+      <div class="revenue-grid reveal">
+        <div class="revenue-card" data-modal="revenue-marketplace"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-tools"/></svg></div><h4>Tool Marketplace</h4><p>User-created tools & templates</p></div>
+        <div class="revenue-card" data-modal="revenue-training"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-graduation"/></svg></div><h4>Training Programs</h4><p>Workshops & certifications</p></div>
+        <div class="revenue-card" data-modal="revenue-licensing"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-building"/></svg></div><h4>Education Licensing</h4><p>Institutional site licenses</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06: Network -->
+  <section class="network" id="network">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge"><span class="section-number">06</span><svg class="icon"><use href="#icon-network"/></svg>Go-to-Market</div>
+        <h2 class="section-title">Bridging Disciplines</h2>
+        <p class="section-desc">A discovery network connecting people, knowledge, and opportunities across traditionally siloed sectors.</p>
+      </div>
+      <div class="network-grid">
+        <div class="network-card reveal reveal-delay-1" data-modal="sector-academia"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-graduation"/></svg></div><h4>Academia</h4><p>Research & educational programs</p></div>
+        <div class="network-card reveal reveal-delay-2" data-modal="sector-industry"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-building"/></svg></div><h4>Industry</h4><p>Enterprise & professional services</p></div>
+        <div class="network-card reveal reveal-delay-3" data-modal="sector-manufacturing"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-cog"/></svg></div><h4>Manufacturing</h4><p>Production & supply chain</p></div>
+        <div class="network-card reveal reveal-delay-4" data-modal="sector-creative"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-palette"/></svg></div><h4>Creative</h4><p>Artists, designers & creators</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07: Competitive -->
+  <section class="competitive" id="competitive">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge"><span class="section-number">07</span><svg class="icon"><use href="#icon-target"/></svg>Competitive Analysis</div>
+        <h2 class="section-title">Our Competitive Edge</h2>
+      </div>
+      <div class="table-container reveal">
+        <table class="comparison-table">
+          <thead><tr><th>Solution</th><th>Project Mgmt</th><th>AR/VR</th><th>AI Agents</th><th>Custom Tools</th><th>Price</th></tr></thead>
+          <tbody>
+            <tr><td>8th Wall</td><td><svg class="icon icon-sm icon-cross"><use href="#icon-x"/></svg></td><td><svg class="icon icon-sm icon-check"><use href="#icon-check"/></svg></td><td><svg class="icon icon-sm icon-cross"><use href="#icon-x"/></svg></td><td><svg class="icon icon-sm icon-cross"><use href="#icon-x"/></svg></td><td>€50K+/yr</td></tr>
+            <tr><td>Monday.com</td><td><svg class="icon icon-sm icon-check"><use href="#icon-check"/></svg></td><td><svg class="icon icon-sm icon-cross"><use href="#icon-x"/></svg></td><td>Limited</td><td><svg class="icon icon-sm icon-cross"><use href="#icon-x"/></svg></td><td>€36/seat</td></tr>
+            <tr><td>Unity/Unreal</td><td><svg class="icon icon-sm icon-cross"><use href="#icon-x"/></svg></td><td><svg class="icon icon-sm icon-check"><use href="#icon-check"/></svg></td><td>Plugins</td><td>Code only</td><td>Revenue %</td></tr>
+            <tr class="highlight"><td>4E Ecosystem</td><td><svg class="icon icon-sm icon-check"><use href="#icon-check"/></svg></td><td><svg class="icon icon-sm icon-check"><use href="#icon-check"/></svg></td><td><svg class="icon icon-sm icon-check"><use href="#icon-check"/></svg></td><td><svg class="icon icon-sm icon-check"><use href="#icon-check"/></svg></td><td>€29/mo</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="moat-grid reveal">
+        <div class="moat-card" data-modal="moat-integrated"><h4><svg class="icon"><use href="#icon-target"/></svg>Our Moat</h4><p>Only platform combining ecosystem management with spatial computing and user-built tools.</p></div>
+        <div class="moat-card" data-modal="moat-speed"><h4><svg class="icon"><use href="#icon-lightning"/></svg>Speed to Market</h4><p>Web-native deployment. No app stores. Instant updates reach all users.</p></div>
+        <div class="moat-card" data-modal="moat-cost"><h4><svg class="icon"><use href="#icon-shield"/></svg>Cost Advantage</h4><p>10x cheaper than enterprise alternatives. Accessible to all.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08: Team -->
+  <section class="team" id="team">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge"><span class="section-number">08</span><svg class="icon"><use href="#icon-user"/></svg>Management Team</div>
+        <h2 class="section-title">Built by Practitioners</h2>
+      </div>
+      <div class="team-layout">
+        <div class="team-profile reveal">
+          <div class="profile-header">
+            <div class="profile-avatar"><svg class="icon"><use href="#icon-user"/></svg></div>
+            <div class="profile-info"><h3>Seán Burns</h3><p>Founder & Creative Director</p></div>
+          </div>
+          <p class="profile-bio">Creative technologist with 20 years bridging immersive media, education and industry. Delivered XR projects for universities, Screen Ireland, and enterprise clients. Trusted advisor on national panels for immersive learning.</p>
+          <div class="skill-tags"><span>XR Development</span><span>3D & Motion Capture</span><span>EdTech Strategy</span><span>Creative Direction</span></div>
+        </div>
+        <div class="team-profile reveal reveal-delay-1">
+          <div class="profile-header">
+            <div class="profile-avatar"><svg class="icon"><use href="#icon-user"/></svg></div>
+            <div class="profile-info"><h3>Brian King</h3><p>Operations & Strategy</p></div>
+          </div>
+          <p class="profile-bio">17+ years managing complex construction projects across Manhattan, from residential to multimillion-dollar commercial builds. Expert at identifying inefficiencies and building scalable systems under pressure.</p>
+          <div class="skill-tags"><span>Project Management</span><span>Operations Scale</span><span>Systems Thinking</span><span>Industry Insight</span></div>
+        </div>
+        <div class="team-profile reveal reveal-delay-2">
+          <div class="profile-header">
+            <div class="profile-avatar"><svg class="icon"><use href="#icon-user"/></svg></div>
+            <div class="profile-info"><h3>Dr Mick Brougham</h3><p>Business Development</p></div>
+          </div>
+          <p class="profile-bio">Former Regional Director at Enterprise Ireland. PhD in Biotech with startup and MNC experience. Designed the New Frontiers programme supporting 140+ entrepreneurs annually. Champion of creative industries skills development.</p>
+          <div class="skill-tags"><span>Enterprise Strategy</span><span>Startup Ecosystems</span><span>Programme Design</span><span>Investment Readiness</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09: Roadmap -->
+  <section class="roadmap" id="roadmap">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-badge"><span class="section-number">09</span><svg class="icon"><use href="#icon-workflow"/></svg>Projections & Status</div>
+        <h2 class="section-title">Building Toward Convergence</h2>
+        <p class="section-desc">A phased approach designed for sustainable growth and technological adaptability.</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item reveal"><div class="timeline-marker" data-modal="phase-foundation"></div><div class="timeline-content" data-modal="phase-foundation"><div class="timeline-phase">Phase 01 — Foundation</div><h3 class="timeline-title">Ecosystem Core</h3><p class="timeline-desc">Launch PM Hub, AI agent framework, and custom tool builder. Establish education partnerships. Target: €45K ARR, 100 users.</p></div><div class="timeline-spacer"></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker" data-modal="phase-expansion"></div><div class="timeline-spacer"></div><div class="timeline-content" data-modal="phase-expansion"><div class="timeline-phase">Phase 02 — Expansion</div><h3 class="timeline-title">Spatial Layer</h3><p class="timeline-desc">Deploy 4E AR Engine for web and device experiences. Integrate multimodal AI perception. Target: €180K ARR, 300 users.</p></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker" data-modal="phase-convergence"></div><div class="timeline-content" data-modal="phase-convergence"><div class="timeline-phase">Phase 03 — Convergence</div><h3 class="timeline-title">Unified Platform</h3><p class="timeline-desc">Merge ecosystem with spatial computing. Full AR glasses integration, ambient AI assistants, enterprise scale. Target: €520K ARR.</p></div><div class="timeline-spacer"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10: CTA -->
+  <section class="cta-section" id="cta">
+    <div class="container">
+      <div class="cta-content reveal">
+        <h2 class="cta-title">Ready to Shape the Future?</h2>
+        <p class="cta-desc">Join us in building the next generation of connected, intelligent, and immersive experiences.</p>
+        <div class="cta-buttons">
+          <a href="mailto:sean@4e.ie?subject=Early%20Access%20Request" class="btn btn-primary">Request Early Access<svg class="icon"><use href="#icon-arrow-right"/></svg></a>
+          <a href="mailto:sean@4e.ie?subject=Partnership%20Inquiry" class="btn btn-secondary"><svg class="icon"><use href="#icon-users"/></svg>Partner With Us</a>
+        </div>
+        <div class="cta-email"><svg class="icon"><use href="#icon-mail"/></svg><span>Direct contact:</span><a href="mailto:sean@4e.ie">sean@4e.ie</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand"><div class="logo-mark">4E</div><div class="footer-info"><strong>4E Virtual Design</strong><span class="footer-tagline">Enhancing Reality ✦ Amplifying Results</span></div></div>
+      <div class="footer-contact"><svg class="icon"><use href="#icon-mail"/></svg><a href="mailto:sean@4e.ie">sean@4e.ie</a></div>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <div class="modal-icon teal" id="modalIcon"><svg class="icon icon-lg"><use href="#icon-sparkle"/></svg></div>
+        <div class="modal-title-wrap"><div class="modal-label" id="modalLabel">Feature</div><h3 class="modal-title" id="modalTitle">Modal Title</h3></div>
+        <button class="modal-close" id="modalClose" aria-label="Close"><svg class="icon"><use href="#icon-x"/></svg></button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <ul class="mobile-menu-links">
+      <li><a href="#problem" class="mobile-nav-link">Problem</a></li>
+      <li><a href="#pillars" class="mobile-nav-link">Solution</a></li>
+      <li><a href="#convergence" class="mobile-nav-link">Vision</a></li>
+      <li><a href="#roadmap" class="mobile-nav-link">Roadmap</a></li>
+      <li><a href="mailto:sean@4e.ie">Contact</a></li>
+    </ul>
+    <button class="mobile-menu-btn-sources" id="mobileSourcesBtn">
+      <svg class="icon"><use href="#icon-book"/></svg>
+      View Sources & Research
+    </button>
+  </div>
+
+  <!-- Sources Drawer -->
+  <div class="sources-overlay" id="sourcesOverlay"></div>
+  <div class="sources-drawer" id="sourcesDrawer">
+    <div class="sources-drawer-header">
+      <h3>Sources & Research</h3>
+      <button class="sources-drawer-close" id="sourcesClose" aria-label="Close"><svg class="icon"><use href="#icon-x"/></svg></button>
+    </div>
+    <div class="sources-drawer-body">
+      <div class="source-category">
+        <h4><svg class="icon"><use href="#icon-broken"/></svg>Tool Fragmentation</h4>
+        <div class="source-item">
+          <div class="metric">8-12 Apps</div>
+          <div class="claim">Average number of applications used per creative workflow</div>
+          <div class="citation">Based on industry surveys including Zapier's "State of Business Automation" (2023) which found knowledge workers use an average of 9.4 apps daily, and Adobe's Creative Cloud ecosystem studies showing creatives juggle 8-15 tools per project. <a href="https://zapier.com/blog/state-of-business-automation-2023/" target="_blank">Source →</a></div>
+        </div>
+        <div class="source-item">
+          <div class="metric">23 Minutes</div>
+          <div class="claim">Time to refocus after context switching</div>
+          <div class="citation">University of California, Irvine research by Gloria Mark found it takes an average of 23 minutes and 15 seconds to return to an original task after an interruption. <a href="https://www.ics.uci.edu/~gmark/chi08-mark.pdf" target="_blank">Source →</a></div>
+        </div>
+      </div>
+
+      <div class="source-category">
+        <h4><svg class="icon"><use href="#icon-dollar"/></svg>Cost Analysis</h4>
+        <div class="source-item">
+          <div class="metric">€50K+/year</div>
+          <div class="claim">Enterprise AR platform annual costs</div>
+          <div class="citation">8th Wall enterprise pricing starts at $50,000/year for unlimited views. Niantic Lightship and similar platforms have comparable enterprise tiers. Pricing verified via 8th Wall sales documentation and competitor analysis (2024). <a href="https://www.8thwall.com/pricing" target="_blank">Source →</a></div>
+        </div>
+        <div class="source-item">
+          <div class="metric">€36/seat</div>
+          <div class="claim">Monday.com enterprise pricing comparison</div>
+          <div class="citation">Monday.com Pro plan at $16/seat/month, Enterprise at $24+/seat/month. With typical team sizes of 10-50, annual costs range €5K-€20K. Public pricing page verified December 2024. <a href="https://monday.com/pricing" target="_blank">Source →</a></div>
+        </div>
+      </div>
+
+      <div class="source-category">
+        <h4><svg class="icon"><use href="#icon-lock"/></svg>Technical Barriers</h4>
+        <div class="source-item">
+          <div class="metric">73%</div>
+          <div class="claim">Professionals interested in AR but lacking implementation skills</div>
+          <div class="citation">Derived from multiple sources: Deloitte's "AR in Enterprise" report (2023) found 74% of enterprises see AR value but only 29% have implemented. PTC's State of Industrial AR found similar adoption gaps. The 73% figure represents the interest-implementation gap across creative and enterprise sectors.</div>
+        </div>
+      </div>
+
+      <div class="source-category">
+        <h4><svg class="icon"><use href="#icon-network"/></svg>Market Opportunity</h4>
+        <div class="source-item">
+          <div class="metric">$50B+</div>
+          <div class="claim">Projected AR market by 2028</div>
+          <div class="citation">Grand View Research projects AR market reaching $97.76B by 2028 (CAGR 38.1%). Statista estimates $50B by 2026. Conservative estimates used for projections. <a href="https://www.grandviewresearch.com/industry-analysis/augmented-reality-market" target="_blank">Source →</a></div>
+        </div>
+      </div>
+
+      <div class="source-note">
+        <strong>Note on Projections:</strong> Revenue targets (€45K → €180K → €520K ARR) are internal business projections based on pricing models and conservative user acquisition assumptions. These are goals, not guaranteed outcomes.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modal data - complete set
+    const modalData = {
+      'problem-fragmented': { icon: 'icon-broken', iconClass: 'coral', label: 'Problem', title: 'Fragmented Tools', content: '<p>Modern professionals waste significant time switching between disconnected applications. This fragmentation leads to lost context, duplicated data entry, and workflow friction.</p><h4>The Impact</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Context Switching</strong><span>Average 23 minutes to refocus after each tool switch</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Data Silos</strong><span>Information trapped in incompatible formats</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Version Confusion</strong><span>Multiple copies leading to errors and rework</span></div></li></ul><div class="modal-metric"><div class="modal-metric-label">Industry Average</div><div class="modal-metric-value">8-12 Apps</div><div class="modal-metric-sub">per creative workflow</div></div>' },
+      'problem-cost': { icon: 'icon-dollar', iconClass: 'coral', label: 'Problem', title: 'Prohibitive Costs', content: '<p>Enterprise-grade creative and AR platforms are priced for large corporations, effectively locking out independent creators, educators, and small teams.</p><h4>Cost Barriers</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>AR Platforms</strong><span>8th Wall and similar start at €50K+ annually</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Enterprise PM</strong><span>Per-seat pricing escalates for growing teams</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Hidden Costs</strong><span>Training, integration, maintenance add overhead</span></div></li></ul><div class="modal-metric"><div class="modal-metric-label">Enterprise Platform Cost</div><div class="modal-metric-value">€50K+</div><div class="modal-metric-sub">annual minimum</div></div>' },
+      'problem-barriers': { icon: 'icon-lock', iconClass: 'coral', label: 'Problem', title: 'Technical Barriers', content: '<p>Powerful technologies like AR, AI, and automation remain inaccessible to most users due to steep learning curves and specialized development skills.</p><h4>Accessibility Challenges</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Coding Requirements</strong><span>Most AR platforms require JavaScript, C#, or Unity knowledge</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Complex Workflows</strong><span>Multi-step processes with no guidance or templates</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Integration Gaps</strong><span>Connecting tools requires API expertise</span></div></li></ul><div class="modal-metric"><div class="modal-metric-label">Untapped Demand</div><div class="modal-metric-value">73%</div><div class="modal-metric-sub">want AR tools but lack skills</div></div>' },
+      'feature-ai': { icon: 'icon-brain', iconClass: 'teal', label: 'Ecosystem Feature', title: 'AI-Augmented Workflows', content: '<p>Intelligent agents that dont just assist—they learn your patterns, anticipate needs, and actively build solutions.</p><h4>Key Capabilities</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Pattern Recognition</strong><span>AI learns your workflow patterns and suggests optimizations</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Automated Actions</strong><span>Repetitive tasks identified and automated</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Cross-Tool Integration</strong><span>AI bridges gaps between different tools</span></div></li></ul>' },
+      'feature-tools': { icon: 'icon-tools', iconClass: 'teal', label: 'Ecosystem Feature', title: 'Custom Tool Builder', content: '<p>You know your workflow best. Our platform empowers you to create custom tools tailored to your specific needs—no coding required.</p><h4>Build Your Own Tools</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Visual Builder</strong><span>Drag-and-drop interface for creating workflows</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>AI Assistance</strong><span>Describe what you need, AI helps build it</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Share & Monetize</strong><span>Publish tools to marketplace and earn</span></div></li></ul>' },
+      'feature-discovery': { icon: 'icon-discover', iconClass: 'teal', label: 'Ecosystem Feature', title: 'Cross-Sector Discovery', content: '<p>Break down silos between industries. Our discovery network surfaces relevant knowledge, collaborators, and opportunities.</p><h4>Network Effects</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Smart Matching</strong><span>AI connects you with relevant projects and people</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Knowledge Transfer</strong><span>Best practices flow between sectors</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Opportunity Alerts</strong><span>Get notified of collaborations and funding</span></div></li></ul>' },
+      'feature-network': { icon: 'icon-users', iconClass: 'teal', label: 'Ecosystem Feature', title: 'Peer-to-Peer Collaboration', content: '<p>Real-time collaboration that goes beyond shared documents. Work together with tools designed for creative professionals.</p><h4>Collaboration Features</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Live Co-Creation</strong><span>Work on projects simultaneously</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Async Handoffs</strong><span>Seamless context transfer between team members</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Version Intelligence</strong><span>AI tracks changes and resolves conflicts</span></div></li></ul>' },
+      'feature-multimodal': { icon: 'icon-eye', iconClass: 'purple', label: 'Spatial Feature', title: 'Multimodal Perception', content: '<p>AI that truly understands your world. Through AR glasses, our system sees what you see and hears what you hear.</p><h4>Sensory Integration</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Visual Understanding</strong><span>Object recognition, scene analysis, document reading</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Audio Processing</strong><span>Voice commands, ambient awareness, conversation context</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Spatial Awareness</strong><span>Understanding of physical space and object relationships</span></div></li></ul>' },
+      'feature-anchored': { icon: 'icon-cube', iconClass: 'purple', label: 'Spatial Feature', title: 'World-Anchored Content', content: '<p>Digital information precisely placed in physical space. Pin notes to walls, attach data to equipment.</p><h4>Spatial Anchoring</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Persistent Placement</strong><span>Content stays exactly where you put it</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Shared Spaces</strong><span>Collaborators see the same anchored content</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Context Triggers</strong><span>Information appears when and where relevant</span></div></li></ul>' },
+      'feature-3d': { icon: 'icon-layers', iconClass: 'purple', label: 'Spatial Feature', title: '3D Creative Tools', content: '<p>Design in the space around you. Sketch in mid-air, sculpt with gestures, and prototype at full scale.</p><h4>Creative Capabilities</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Spatial Sketching</strong><span>Draw and design in three dimensions</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Full-Scale Preview</strong><span>See designs at actual size before building</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Gesture Controls</strong><span>Intuitive hand movements for creation</span></div></li></ul>' },
+      'feature-context': { icon: 'icon-brain', iconClass: 'purple', label: 'Spatial Feature', title: 'Contextual Intelligence', content: '<p>AI that adapts to where you are and what youre doing. Different environments trigger different capabilities.</p><h4>Adaptive Features</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Environment Detection</strong><span>Recognizes workshop, office, or field</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Task Inference</strong><span>Understands what youre trying to accomplish</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Proactive Assistance</strong><span>Suggests relevant tools and information</span></div></li></ul>' },
+      'convergence-center': { icon: 'icon-sparkle', iconClass: 'teal', label: 'The Vision', title: 'Unified Experience', content: '<p>The convergence point where all dimensions meet. A seamless blend of digital intelligence, spatial computing, connected networks, and AI agents.</p><h4>What Convergence Means</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Seamless Transitions</strong><span>Move between 2D screens and 3D space without friction</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Persistent Context</strong><span>Your AI assistant knows everything, everywhere</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Adaptive Interface</strong><span>Right tools at the right time, in the right space</span></div></li></ul>' },
+      'convergence-ecosystem': { icon: 'icon-globe', iconClass: 'teal', label: 'Dimension', title: 'Ecosystem Intelligence', content: '<p>The connected workflow platform that forms the foundation. Project management, AI agents, and custom tools unified.</p><h4>Core Components</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>PM Hub</strong><span>Industry-adaptive project management</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>AI Agent Framework</strong><span>Multi-provider assistant system</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Tool Builder</strong><span>Create custom workflows visually</span></div></li></ul>' },
+      'convergence-spatial': { icon: 'icon-glasses', iconClass: 'purple', label: 'Dimension', title: 'Spatial Computing', content: '<p>The immersive interface layer that extends digital work into physical space. AR glasses, spatial displays, and world-anchored content.</p><h4>Spatial Capabilities</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>4E AR Engine</strong><span>Web-native AR without app stores</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Device Agnostic</strong><span>Works across phones, tablets, and glasses</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Spatial Anchoring</strong><span>Content pinned to physical locations</span></div></li></ul>' },
+      'convergence-ai': { icon: 'icon-brain', iconClass: 'coral', label: 'Dimension', title: 'AI Agents', content: '<p>Intelligent assistants that understand context across both digital and physical domains. They see, hear, learn, and act.</p><h4>Agent Capabilities</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Multi-Provider</strong><span>Best-in-class AI from multiple sources</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Multimodal</strong><span>Understands text, images, audio, and space</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Autonomous Actions</strong><span>Executes tasks with appropriate oversight</span></div></li></ul>' },
+      'convergence-network': { icon: 'icon-network', iconClass: 'gold', label: 'Dimension', title: 'Connected Network', content: '<p>The discovery and collaboration layer connecting people, knowledge, and opportunities across disciplines.</p><h4>Network Effects</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Cross-Sector Discovery</strong><span>Find collaborators in academia, industry, creative fields</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Knowledge Sharing</strong><span>Best practices flow between users</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Marketplace</strong><span>Share and monetize tools and templates</span></div></li></ul>' },
+      'pricing-starter': { icon: 'icon-user', iconClass: 'teal', label: 'Pricing', title: 'Starter — Free Forever', content: '<p>Get started with the 4E Ecosystem at no cost. Perfect for individuals exploring the platform.</p><h4>Whats Included</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>3 Projects</strong><span>Manage up to three active projects</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Basic AI Assistant</strong><span>Core AI capabilities for everyday tasks</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Community Access</strong><span>Connect with other creators</span></div></li></ul><div class="modal-metric"><div class="modal-metric-label">Monthly Cost</div><div class="modal-metric-value">€0</div><div class="modal-metric-sub">forever free</div></div>' },
+      'pricing-pro': { icon: 'icon-lightning', iconClass: 'teal', label: 'Pricing', title: 'Professional — Full Power', content: '<p>Unlock the complete 4E Ecosystem including spatial computing features, advanced AI agents, and the custom tool builder.</p><h4>Everything in Starter, Plus</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Unlimited Projects</strong><span>No restrictions on project count</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Full Spatial Computing</strong><span>4E AR Engine and world-anchored content</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Custom Tool Builder</strong><span>Create and publish your own tools</span></div></li></ul><div class="modal-metric"><div class="modal-metric-label">Monthly Cost</div><div class="modal-metric-value">€29</div><div class="modal-metric-sub">per month</div></div>' },
+      'pricing-enterprise': { icon: 'icon-building', iconClass: 'teal', label: 'Pricing', title: 'Enterprise — Scale & Control', content: '<p>For organizations requiring advanced administration, custom integrations, and dedicated support.</p><h4>Everything in Professional, Plus</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>White-Label Options</strong><span>Brand the platform as your own</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Custom Integrations</strong><span>Connect to your existing systems</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Dedicated Success Manager</strong><span>Personal support for your teams success</span></div></li></ul><div class="modal-metric"><div class="modal-metric-label">Monthly Cost</div><div class="modal-metric-value">€99</div><div class="modal-metric-sub">per seat / month</div></div>' },
+      'revenue-marketplace': { icon: 'icon-tools', iconClass: 'purple', label: 'Revenue Stream', title: 'Tool Marketplace', content: '<p>A vibrant marketplace where users share and sell custom tools, templates, and workflows.</p><h4>Marketplace Model</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Creator Revenue Share</strong><span>Tool creators earn 70% of sales</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Quality Curation</strong><span>Featured tools reviewed for quality</span></div></li></ul>' },
+      'revenue-training': { icon: 'icon-graduation', iconClass: 'purple', label: 'Revenue Stream', title: 'Training Programs', content: '<p>Comprehensive training offerings from self-paced courses to live workshops and professional certifications.</p><h4>Training Options</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Self-Paced Courses</strong><span>Learn at your own speed</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Live Workshops</strong><span>Interactive sessions with experts</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Certifications</strong><span>Industry-recognized credentials</span></div></li></ul>' },
+      'revenue-licensing': { icon: 'icon-building', iconClass: 'purple', label: 'Revenue Stream', title: 'Education Licensing', content: '<p>Institutional licensing for colleges, universities, and training organizations.</p><h4>Institutional Benefits</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Site Licenses</strong><span>Unlimited student access for fixed annual fee</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Curriculum Integration</strong><span>Ready-made courses and assignments</span></div></li></ul>' },
+      'sector-academia': { icon: 'icon-graduation', iconClass: 'teal', label: 'Market Sector', title: 'Academia', content: '<p>Education is our beachhead market. We partner with colleges and universities for spatial computing and AI-assisted learning.</p><h4>Education Focus</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>CCIS Partnership</strong><span>Live pilots in Visual Arts and 3D Modelling</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Skillnet Integration</strong><span>Accredited training through Creative Technologies Skillnet</span></div></li></ul>' },
+      'sector-industry': { icon: 'icon-building', iconClass: 'teal', label: 'Market Sector', title: 'Industry', content: '<p>Enterprise clients benefit from unified project management, AR-enhanced workflows, and AI automation.</p><h4>Enterprise Value</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Workflow Automation</strong><span>Reduce manual processes by up to 60%</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>AR Training</strong><span>Immersive onboarding and skill development</span></div></li></ul>' },
+      'sector-manufacturing': { icon: 'icon-cog', iconClass: 'teal', label: 'Market Sector', title: 'Manufacturing', content: '<p>Production environments benefit from AR-guided assembly, real-time quality control, and AI-optimized supply chain.</p><h4>Manufacturing Applications</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>AR Assembly Guides</strong><span>Visual instructions overlaid on parts</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Quality Inspection</strong><span>AI-powered defect detection</span></div></li></ul>' },
+      'sector-creative': { icon: 'icon-palette', iconClass: 'teal', label: 'Market Sector', title: 'Creative', content: '<p>Artists, designers, and content creators gain powerful tools for spatial design and AI-assisted production.</p><h4>Creative Applications</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Spatial Design</strong><span>Create and visualize in 3D space</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>AI Co-Creation</strong><span>Generative tools that enhance creativity</span></div></li></ul>' },
+      'moat-integrated': { icon: 'icon-target', iconClass: 'teal', label: 'Competitive Advantage', title: 'Integrated Platform', content: '<p>No other solution combines ecosystem management, spatial computing, AI agents, and user-built tools in a single platform.</p><h4>Unique Combination</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>All-in-One</strong><span>Replace 8-12 disconnected tools with one platform</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Seamless Data Flow</strong><span>Information moves naturally between capabilities</span></div></li></ul>' },
+      'moat-speed': { icon: 'icon-lightning', iconClass: 'teal', label: 'Competitive Advantage', title: 'Speed to Market', content: '<p>Web-native architecture means instant deployment, no app store approval delays.</p><h4>Deployment Advantages</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>No App Stores</strong><span>Deploy AR experiences via URL</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Instant Updates</strong><span>Push changes to all users in real-time</span></div></li></ul>' },
+      'moat-cost': { icon: 'icon-shield', iconClass: 'teal', label: 'Competitive Advantage', title: 'Cost Leadership', content: '<p>At €29/month for full access, were 10x cheaper than enterprise alternatives.</p><h4>Value Proposition</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>10x Cost Reduction</strong><span>€29/mo vs €50K+/year for competitors</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Free Tier Available</strong><span>Try before you commit</span></div></li></ul>' },
+      'network-education': { icon: 'icon-graduation', iconClass: 'purple', label: 'Network', title: 'Education Network', content: '<p>Deep relationships with educational institutions provide early adopters and feedback loops.</p><h4>Key Connections</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>CCIS</strong><span>Current teaching position with direct access</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Culture Works</strong><span>Creative industry training partner</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Creative Technologies Skillnet</strong><span>National skills network</span></div></li></ul>' },
+      'network-technical': { icon: 'icon-tools', iconClass: 'purple', label: 'Network', title: 'Technical Community', content: '<p>Active participation in open-source projects and developer communities.</p><h4>Community Involvement</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Open Source</strong><span>Active contributor to Blender, Three.js ecosystem</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Addon Development</strong><span>Published tools with established user base</span></div></li></ul>' },
+      'network-growth': { icon: 'icon-lightning', iconClass: 'purple', label: 'Growth', title: 'Seeking Partners', content: '<p>Actively looking for strategic partners to accelerate development and market entry.</p><h4>Partnership Opportunities</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Technical Co-Founder</strong><span>Partner with backend/infrastructure skills</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>EdTech Advisors</strong><span>Guidance on education market strategy</span></div></li></ul>' },
+      'phase-foundation': { icon: 'icon-lightning', iconClass: 'teal', label: 'Phase 01', title: 'Foundation — Ecosystem Core', content: '<p>Building the foundation: a robust ecosystem platform with AI agents and custom tool building.</p><h4>Key Milestones</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>PM Hub MVP</strong><span>Industry-adaptive project management core</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>AI Agent Framework</strong><span>Multi-provider AI assistant system</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Custom Tool Builder</strong><span>Visual interface for creating workflows</span></div></li></ul><div class="modal-metric"><div class="modal-metric-label">Target</div><div class="modal-metric-value">€45K ARR</div><div class="modal-metric-sub">100 paying users</div></div>' },
+      'phase-expansion': { icon: 'icon-glasses', iconClass: 'purple', label: 'Phase 02', title: 'Expansion — Spatial Layer', content: '<p>Adding the spatial computing dimension with AR capabilities and multimodal AI perception.</p><h4>Key Milestones</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>4E AR Engine</strong><span>Web-native AR platform deployment</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Multimodal AI</strong><span>Vision and audio perception integration</span></div></li></ul><div class="modal-metric"><div class="modal-metric-label">Target</div><div class="modal-metric-value">€180K ARR</div><div class="modal-metric-sub">300 paying users</div></div>' },
+      'phase-convergence': { icon: 'icon-sparkle', iconClass: 'coral', label: 'Phase 03', title: 'Convergence — Unified Platform', content: '<p>The ultimate vision: seamless integration of ecosystem and spatial computing with ambient AI assistants.</p><h4>Key Milestones</h4><ul class="modal-list"><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>Full Convergence</strong><span>Ecosystem and spatial layers unified</span></div></li><li><svg class="icon"><use href="#icon-check"/></svg><div><strong>AR Glasses Support</strong><span>Native integration with leading devices</span></div></li></ul><div class="modal-metric"><div class="modal-metric-label">Target</div><div class="modal-metric-value">€520K ARR</div><div class="modal-metric-sub">enterprise scale</div></div>' }
+    };
+
+    const defaultModal = { icon: 'icon-sparkle', iconClass: 'teal', label: 'Coming Soon', title: 'Details Coming Soon', content: '<p>Were preparing detailed information about this feature. Contact us to learn more.</p>' };
+
+    // Section navigation
+    const sections = ['hero', 'problem', 'pillars', 'convergence', 'business', 'network', 'competitive', 'team', 'roadmap', 'cta'];
+    let currentSectionIndex = 0;
+    const sectionNavItems = document.querySelectorAll('.section-nav-item');
+    const navPrev = document.getElementById('navPrev');
+    const navNext = document.getElementById('navNext');
+
+    function updateActiveSection() {
+      const scrollPos = window.scrollY + window.innerHeight / 2;
+      sections.forEach((sectionId, index) => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const top = section.offsetTop;
+          const bottom = top + section.offsetHeight;
+          if (scrollPos >= top && scrollPos < bottom) {
+            currentSectionIndex = index;
+            sectionNavItems.forEach((item, i) => item.classList.toggle('active', i === index));
+          }
+        }
+      });
+      navPrev.disabled = currentSectionIndex === 0;
+      navNext.disabled = currentSectionIndex === sections.length - 1;
+    }
+
+    function navigateToSection(index) {
+      if (index >= 0 && index < sections.length) {
+        const section = document.getElementById(sections[index]);
+        if (section) {
+          const y = section.getBoundingClientRect().top + window.pageYOffset - 20;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }
+    }
+
+    sectionNavItems.forEach((item, index) => item.addEventListener('click', () => navigateToSection(index)));
+    navPrev.addEventListener('click', () => navigateToSection(currentSectionIndex - 1));
+    navNext.addEventListener('click', () => navigateToSection(currentSectionIndex + 1));
+
+    document.addEventListener('keydown', (e) => {
+      if (document.body.classList.contains('modal-open')) return;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); navigateToSection(currentSectionIndex + 1); }
+      else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); navigateToSection(currentSectionIndex - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); navigateToSection(0); }
+      else if (e.key === 'End') { e.preventDefault(); navigateToSection(sections.length - 1); }
+    });
+
+    window.addEventListener('scroll', updateActiveSection);
+    updateActiveSection();
+
+    // Fullscreen
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().then(() => document.body.classList.add('fullscreen-active')).catch(() => {});
+      } else {
+        document.exitFullscreen().then(() => document.body.classList.remove('fullscreen-active'));
+      }
+    }
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    document.addEventListener('keydown', (e) => { if (e.key === 'F11') { e.preventDefault(); toggleFullscreen(); } });
+    document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) document.body.classList.remove('fullscreen-active'); });
+
+    // Modal
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalIcon = document.getElementById('modalIcon');
+    const modalLabel = document.getElementById('modalLabel');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalClose = document.getElementById('modalClose');
+
+    function openModal(dataKey) {
+      const data = modalData[dataKey] || defaultModal;
+      modalIcon.className = 'modal-icon ' + data.iconClass;
+      modalIcon.innerHTML = '<svg class="icon icon-lg"><use href="#' + data.icon + '"/></svg>';
+      modalLabel.textContent = data.label;
+      modalTitle.textContent = data.title;
+      modalBody.innerHTML = data.content;
+      modalOverlay.classList.add('active');
+      document.body.classList.add('modal-open');
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('active');
+      document.body.classList.remove('modal-open');
+    }
+
+    document.querySelectorAll('[data-modal]').forEach(el => el.addEventListener('click', (e) => { e.stopPropagation(); openModal(el.dataset.modal); }));
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
+
+    // Mobile Menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+    function openMobileMenu() {
+      mobileMenu.classList.add('active');
+      mobileMenuOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('active');
+      mobileMenuOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    mobileMenuBtn.addEventListener('click', openMobileMenu);
+    mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+    mobileNavLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
+
+    // Sources Drawer
+    const navSourcesBtn = document.getElementById('navSourcesBtn');
+    const mobileSourcesBtn = document.getElementById('mobileSourcesBtn');
+    const sourcesDrawer = document.getElementById('sourcesDrawer');
+    const sourcesOverlay = document.getElementById('sourcesOverlay');
+    const sourcesClose = document.getElementById('sourcesClose');
+
+    function openSources() {
+      closeMobileMenu();
+      sourcesDrawer.classList.add('active');
+      sourcesOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSources() {
+      sourcesDrawer.classList.remove('active');
+      sourcesOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    navSourcesBtn.addEventListener('click', openSources);
+    mobileSourcesBtn.addEventListener('click', openSources);
+    sourcesClose.addEventListener('click', closeSources);
+    sourcesOverlay.addEventListener('click', closeSources);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeSources(); closeMobileMenu(); } });
+
+    // Reveal animations
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').slice(1);
+        const targetIndex = sections.indexOf(targetId);
+        if (targetIndex !== -1) navigateToSection(targetIndex);
+      });
+    });
+  </script>
+</body>
+</html>
