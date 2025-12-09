@@ -1,0 +1,39 @@
+{
+  "name": "PortalXR - The Future of Connected Intelligence",
+  "short_name": "PortalXR",
+  "description": "Spatial computing and AI-powered ecosystem for creators and enterprises",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#06060a",
+  "theme_color": "#00d4aa",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "technology"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "View Pitch Deck",
+      "url": "/",
+      "description": "Open the PortalXR pitch deck"
+    }
+  ]
+}
