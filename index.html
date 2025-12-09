@@ -303,7 +303,27 @@
     .timeline-title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
     .timeline-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
     .timeline-spacer { flex: 1; }
-    
+
+    /* Projections Table */
+    .projections-wrapper { margin-top: 3rem; }
+    .projections-table { width: 100%; max-width: 800px; margin: 0 auto 2.5rem; border-collapse: collapse; }
+    .projections-table th, .projections-table td { padding: 1rem 1.25rem; text-align: center; border-bottom: 1px solid var(--border-subtle); }
+    .projections-table th { font-family: var(--font-display); font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; background: var(--bg-elevated); }
+    .projections-table th:first-child { text-align: left; border-radius: 8px 0 0 0; }
+    .projections-table th:last-child { border-radius: 0 8px 0 0; }
+    .projections-table td { font-size: 0.95rem; color: var(--text-secondary); }
+    .projections-table td:first-child { text-align: left; font-weight: 500; color: var(--text-primary); }
+    .projections-table .highlight-value { color: var(--accent-teal); font-weight: 600; }
+    .projections-table tbody tr:hover { background: var(--bg-glass-subtle); }
+
+    /* Use of Funds */
+    .funds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; max-width: 800px; margin: 0 auto; }
+    .funds-card { padding: 1.5rem; background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 14px; text-align: center; }
+    .funds-card .percentage { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--accent-teal); margin-bottom: 0.5rem; }
+    .funds-card h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .funds-card p { font-size: 0.8rem; color: var(--text-muted); }
+    .funds-subtitle { text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 1.5rem; }
+
     /* CTA Section */
     .cta-section { background: var(--bg-deep); position: relative; }
     .cta-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent 0%, var(--accent-teal) 50%, transparent 100%); }
@@ -421,7 +441,9 @@
       .mobile-menu-btn { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; }
       section { padding: 4rem 1.25rem; min-height: auto; }
       .hero { min-height: 100vh; min-height: 100dvh; }
-      .problem-grid, .network-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+      .problem-grid, .network-grid, .funds-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+      .projections-table { font-size: 0.85rem; }
+      .projections-table th, .projections-table td { padding: 0.75rem 0.5rem; }
       .timeline::before { left: 16px; }
       .timeline-item { flex-direction: column !important; padding-left: 48px; gap: 0; }
       .timeline-marker { left: 16px !important; top: 0; }
@@ -745,14 +767,14 @@
     <div class="container">
       <div class="section-header reveal">
         <div class="section-badge"><span class="section-number">06</span><svg class="icon"><use href="#icon-network"/></svg>Go-to-Market</div>
-        <h2 class="section-title">Bridging Disciplines</h2>
-        <p class="section-desc">A discovery network connecting people, knowledge, and opportunities across traditionally siloed sectors.</p>
+        <h2 class="section-title">How We Reach Customers</h2>
+        <p class="section-desc">Leveraging existing networks and partnerships to acquire users without breaking the bank.</p>
       </div>
       <div class="network-grid">
-        <div class="network-card reveal reveal-delay-1" data-modal="sector-academia"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-graduation"/></svg></div><h4>Academia</h4><p>Research & educational programs</p></div>
-        <div class="network-card reveal reveal-delay-2" data-modal="sector-industry"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-building"/></svg></div><h4>Industry</h4><p>Enterprise & professional services</p></div>
-        <div class="network-card reveal reveal-delay-3" data-modal="sector-manufacturing"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-cog"/></svg></div><h4>Manufacturing</h4><p>Production & supply chain</p></div>
-        <div class="network-card reveal reveal-delay-4" data-modal="sector-creative"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-palette"/></svg></div><h4>Creative</h4><p>Artists, designers & creators</p></div>
+        <div class="network-card reveal reveal-delay-1"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-graduation"/></svg></div><h4>Education Partners</h4><p>Direct access via ATU, Skillnet, training programmes</p></div>
+        <div class="network-card reveal reveal-delay-2"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-building"/></svg></div><h4>Enterprise Ireland</h4><p>New Frontiers alumni network & regional supports</p></div>
+        <div class="network-card reveal reveal-delay-3"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-users"/></svg></div><h4>Creative Communities</h4><p>Screen Ireland, film studios, XR meetups</p></div>
+        <div class="network-card reveal reveal-delay-4"><div class="icon-wrap"><svg class="icon icon-lg"><use href="#icon-sparkle"/></svg></div><h4>Content Marketing</h4><p>Tutorials, case studies, open-source tools</p></div>
       </div>
     </div>
   </section>
@@ -828,9 +850,26 @@
         <p class="section-desc">A phased approach designed for sustainable growth and technological adaptability.</p>
       </div>
       <div class="timeline">
-        <div class="timeline-item reveal"><div class="timeline-marker" data-modal="phase-foundation"></div><div class="timeline-content" data-modal="phase-foundation"><div class="timeline-phase">Phase 01 — Foundation</div><h3 class="timeline-title">Ecosystem Core</h3><p class="timeline-desc">Launch PM Hub, AI agent framework, and custom tool builder. Establish education partnerships. Target: €45K ARR, 100 users.</p></div><div class="timeline-spacer"></div></div>
-        <div class="timeline-item reveal"><div class="timeline-marker" data-modal="phase-expansion"></div><div class="timeline-spacer"></div><div class="timeline-content" data-modal="phase-expansion"><div class="timeline-phase">Phase 02 — Expansion</div><h3 class="timeline-title">Spatial Layer</h3><p class="timeline-desc">Deploy 4E AR Engine for web and device experiences. Integrate multimodal AI perception. Target: €180K ARR, 300 users.</p></div></div>
-        <div class="timeline-item reveal"><div class="timeline-marker" data-modal="phase-convergence"></div><div class="timeline-content" data-modal="phase-convergence"><div class="timeline-phase">Phase 03 — Convergence</div><h3 class="timeline-title">Unified Platform</h3><p class="timeline-desc">Merge ecosystem with spatial computing. Full AR glasses integration, ambient AI assistants, enterprise scale. Target: €520K ARR.</p></div><div class="timeline-spacer"></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker" data-modal="phase-foundation"></div><div class="timeline-content" data-modal="phase-foundation"><div class="timeline-phase">Phase 01 — Foundation</div><h3 class="timeline-title">Ecosystem Core</h3><p class="timeline-desc">Launch PM Hub, AI agent framework, and custom tool builder. Establish education partnerships.</p></div><div class="timeline-spacer"></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker" data-modal="phase-expansion"></div><div class="timeline-spacer"></div><div class="timeline-content" data-modal="phase-expansion"><div class="timeline-phase">Phase 02 — Expansion</div><h3 class="timeline-title">Spatial Layer</h3><p class="timeline-desc">Deploy 4E AR Engine for web and device experiences. Integrate multimodal AI perception.</p></div></div>
+        <div class="timeline-item reveal"><div class="timeline-marker" data-modal="phase-convergence"></div><div class="timeline-content" data-modal="phase-convergence"><div class="timeline-phase">Phase 03 — Convergence</div><h3 class="timeline-title">Unified Platform</h3><p class="timeline-desc">Merge ecosystem with spatial computing. Full AR glasses integration, ambient AI assistants.</p></div><div class="timeline-spacer"></div></div>
+      </div>
+      <div class="projections-wrapper reveal">
+        <table class="projections-table">
+          <thead><tr><th>Metric</th><th>Year 1</th><th>Year 2</th><th>Year 3</th></tr></thead>
+          <tbody>
+            <tr><td>Users</td><td>100</td><td>300</td><td class="highlight-value">800</td></tr>
+            <tr><td>ARR</td><td>€45K</td><td>€180K</td><td class="highlight-value">€520K</td></tr>
+            <tr><td>Conversion Rate</td><td>5%</td><td>8%</td><td class="highlight-value">12%</td></tr>
+            <tr><td>Avg Revenue/User</td><td>€450</td><td>€600</td><td class="highlight-value">€650</td></tr>
+          </tbody>
+        </table>
+        <div class="funds-grid">
+          <div class="funds-card"><div class="percentage">50%</div><h4>Development</h4><p>Platform features, AR engine, AI integration</p></div>
+          <div class="funds-card"><div class="percentage">30%</div><h4>Marketing</h4><p>Content, partnerships, community building</p></div>
+          <div class="funds-card"><div class="percentage">20%</div><h4>Operations</h4><p>Infrastructure, support, legal</p></div>
+        </div>
+        <p class="funds-subtitle">Projected use of seed funding</p>
       </div>
     </div>
   </section>
